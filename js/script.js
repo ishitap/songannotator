@@ -8,30 +8,37 @@ function formatTimestamp(timestamp) {
 }
 
 function findIndex(annotation) {
-	var index = 0;
-	annotations.some(function (e, i, a) {
-		if(e.timestamp > annotation.timestamp) {
+	var index = annotations.length;
+	for (i = 0; i < annotations.length; i++){
+		if (annotations[i]["timestamp"] > annotation.timestamp){
 			index = i;
-			return true;
+			break;
 		}
-		return false;
-	});
+	}
 	return index;
 }
 
 
 function displayAnnotation(annotation) {
 
+	annotation.timestamp = Number(annotation.timestamp);
+
 	annotation.displayID = '#' + annotation.timestamp;
 
-	var tableRow = "<tr id='" + annotation.displayID + "'><td>" + formatTimestamp(annotation.timestamp) 
+	var tableRow = "<tr id='" + annotation.timestamp + "'><td>" + formatTimestamp(annotation.timestamp) 
 								+ "</td><td>" + annotation.text + "</td></tr>";
 
-	var prevIndex = findIndex(annotation) - 1;
+	var index = findIndex(annotation)
+	var prevIndex = index - 1;
+
 	if (prevIndex >= 0) {
-		table.find(annotations[prevIndex].displayID).after(tableRow);
+		console.log(annotation.timestamp + " not first")
+		var prev = table.find(annotations[prevIndex].displayID)
+		console.log(prev)
+		prev.after(tableRow);
 	}
-	else table.find('#heading-row').after(tableRow);
+	else 
+		table.find('#heading-row').after(tableRow);
 
 	annotations.splice(prevIndex+1, 0, annotation);
 }
@@ -45,10 +52,7 @@ function displayAllAnnotations(annotations) {
 $(document).ready(function () {
 	table = $('#annotation-table');
 	var ann = [ { timestamp: 5, text: "hi"},
-							{ timestamp: 11, text: "how"}, 
-							{ timestamp: 3, text: "are"},
-							{ timestamp: 9, text: "you"},
-							{ timestamp: 1, text: "dude"},]
+							{ timestamp: 6, text: "how"}]
 
 	displayAllAnnotations(ann);
 });
