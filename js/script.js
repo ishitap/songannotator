@@ -67,8 +67,8 @@ function highlight(time){
 	}
 	for (i = 0; i < annotations.length; i++){
 		if (annotations[i]["timestamp"] == time){
-			document.getElementById("#" + time).style.backgroundColor = "yellow";
-			onAnn = "#" + time;
+			document.getElementById(time).style.backgroundColor = "yellow";
+			onAnn = time;
 		}
 	}
 }
