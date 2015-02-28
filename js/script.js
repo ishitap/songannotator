@@ -53,3 +53,18 @@ $(document).ready(function () {
 	displayAllAnnotations(ann);
 });
 
+//Global variable which stores the id of the annotation which is currently "on", if any
+onAnn = null;
+
+//Given a time in seconds, highlights that annotation to be yellow 
+function highlight(time){
+	if (onAnn){
+		document.getElementById(onAnn).style.backgroundColor = "white";
+	}
+	for (i = 0; i < annotations.length; i++){
+		if (annotations[i]["timestamp"] == time){
+			document.getElementById("#" + time).style.backgroundColor = "yellow";
+			onAnn = "#" + time;
+		}
+	}
+}
