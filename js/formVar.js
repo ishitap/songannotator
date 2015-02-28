@@ -7,5 +7,6 @@ document.getElementById("addButton").onclick = function(){
 	text = formElems[1].value;
 	annotation.timestamp = time;
 	annotation.text = text;
+	displayAnnotation(annotation)
 };
 
