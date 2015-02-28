@@ -8,23 +8,22 @@ function formatTimestamp(timestamp) {
 }
 
 function findIndex(annotation) {
-	var index = 0;
-	annotations.some(function (e, i, a) {
-		if(e.timestamp > annotation.timestamp) {
+	var index = annotations.length;
+	for (i = 0; i < annotations.length; i++){
+		if (annotations[i]["timestamp"] > annotation.timestamp){
 			index = i;
-			return true;
+			break;
 		}
-		return false;
-	});
+	}
 	return index;
-}
+}	
 
 
 function displayAnnotation(annotation) {
 
 	annotation.displayID = '#' + annotation.timestamp;
 
-	var tableRow = "<tr id='" + annotation.displayID + "'><td>" + formatTimestamp(annotation.timestamp) 
+	var tableRow = "<tr id='" + annotation.timestamp + "'><td>" + formatTimestamp(annotation.timestamp) 
 								+ "</td><td>" + annotation.text + "</td></tr>";
 
 	var prevIndex = findIndex(annotation) - 1;
