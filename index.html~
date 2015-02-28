@@ -4,6 +4,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
 
 	<div id="annotation-display">
 		ANNOTATIONS
@@ -14,18 +15,22 @@
 		</table>
 	</div>
 
-	<form id="annForm">
-	Time in Seconds: <input type="number"></input>
-	</form>
-	</br>
-	Annotation: <textarea form="annForm"></textarea>
-	</br>
-	<button id="addButton">Add Annotation</button>
 </body>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+=======
+<form id="annForm">
+Time in Seconds: <input type="number"></input>
+</form>
+</br>
+Annotation: <textarea form="annForm"></textarea>
+</br>
+<button id="addButton">Add Annotation</button>
+</body>
+
 <script src="js/formVar.js"></script>
+>>>>>>> master
 
 </html>
 
