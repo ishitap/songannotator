@@ -22,7 +22,6 @@ function findIndex(annotation) {
 function displayAnnotation(annotation) {
 
 	annotation.timestamp = Number(annotation.timestamp);
-
 	annotation.displayID = '#' + annotation.timestamp;
 
 	var tableRow = "<tr id='" + annotation.timestamp + "'><td>" + formatTimestamp(annotation.timestamp) 
@@ -34,13 +33,18 @@ function displayAnnotation(annotation) {
 	if (prevIndex >= 0) {
 		console.log(annotation.timestamp + " not first")
 		var prev = table.find(annotations[prevIndex].displayID)
-		console.log(prev)
 		prev.after(tableRow);
 	}
 	else 
 		table.find('#heading-row').after(tableRow);
 
-	annotations.splice(prevIndex+1, 0, annotation);
+	console.log(annotations.length)
+
+	if (index >= annotations.length)
+		annotations.push(annotation);
+	else {
+		annotations.splice(index, 0, annotation);
+	}
 }
 
 function displayAllAnnotations(annotations) {
