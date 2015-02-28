@@ -7,6 +7,7 @@ function formatTimestamp(timestamp) {
 	return timestamp;
 }
 
+//Helper Function: Finds the right spot for the annotation to be added within the time-wise sorted array
 function findIndex(annotation) {
 	var index = annotations.length;
 	for (i = 0; i < annotations.length; i++){
@@ -16,9 +17,9 @@ function findIndex(annotation) {
 		}
 	}
 	return index;
-}
+}	
 
-
+//Displays the newly added annotation
 function displayAnnotation(annotation) {
 
 	annotation.timestamp = Number(annotation.timestamp);
@@ -47,12 +48,30 @@ function displayAnnotation(annotation) {
 	}
 }
 
+//Displays all the annotations that are already present
 function displayAllAnnotations(annotations) {
 	annotations.forEach(function (e, i, a) {
 		displayAnnotation(e);
 	});
 }
 
+//Global variable which stores the id of the annotation which is currently "on", if any
+onAnn = null;
+
+//Given a time in seconds, highlights that annotation to be yellow 
+function highlight(time){
+	if (onAnn){
+		document.getElementById(onAnn).style.backgroundColor = "white";
+	}
+	for (i = 0; i < annotations.length; i++){
+		if (annotations[i]["timestamp"] == time){
+			document.getElementById(time).style.backgroundColor = "yellow";
+			onAnn = time;
+		}
+	}
+}
+
+//Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
 	table = $('#annotation-table');
 	var ann = [ { timestamp: 5, text: "hi"},
@@ -60,4 +79,3 @@ $(document).ready(function () {
 
 	displayAllAnnotations(ann);
 });
-
