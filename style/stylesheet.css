@@ -12,3 +12,8 @@ table, th, td {
 	text-align: left;
 	padding: 10px;
 }
+
+* {
+	font-family: "Helvetica Neue", serif;
+	font-weight: 300;
+}
