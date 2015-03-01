@@ -4,10 +4,16 @@ var table;
 var annotations = [];
 
 function formatTimestamp(timestamp) {
-	return timestamp;
+	var min = Math.floor(timestamp / 60);
+	var sec = timestamp % 60;
+	if (sec < 10) {
+		sec = "0" + sec;
+	}
+	var formatted = min + ":" + sec;
+	return formatted;
 }
 
-//Helper Function: Finds the right spot for the annotation to be added within the time-wise sorted array
+// Helper Function: Finds the right spot for the annotation to be added within the time-wise sorted array
 function findIndex(annotation) {
 	var index = annotations.length;
 	for (i = 0; i < annotations.length; i++){
@@ -19,7 +25,7 @@ function findIndex(annotation) {
 	return index;
 }	
 
-//Displays the newly added annotation
+// Displays the newly added annotation
 function displayAnnotation(annotation) {
 
 	annotation.timestamp = Number(annotation.timestamp);
@@ -32,14 +38,14 @@ function displayAnnotation(annotation) {
 	var prevIndex = index - 1;
 
 	if (prevIndex >= 0) {
-		console.log(annotation.timestamp + " not first")
+		// console.log(annotation.timestamp + " not first")
 		var prev = table.find(annotations[prevIndex].displayID)
 		prev.after(tableRow);
 	}
 	else 
 		table.find('#heading-row').after(tableRow);
 
-	console.log(annotations.length)
+	// console.log(annotations.length)
 
 	if (index >= annotations.length)
 		annotations.push(annotation);
@@ -48,17 +54,17 @@ function displayAnnotation(annotation) {
 	}
 }
 
-//Displays all the annotations that are already present
+// Displays all the annotations that are already present
 function displayAllAnnotations(annotations) {
 	annotations.forEach(function (e, i, a) {
 		displayAnnotation(e);
 	});
 }
 
-//Global variable which stores the id of the annotation which is currently "on", if any
+// Global variable which stores the id of the annotation which is currently "on", if any
 onAnn = null;
 
-//Given a time in seconds, highlights that annotation to be yellow 
+// Given a time in seconds, highlights that annotation to be yellow 
 function highlight(time){
 	if (onAnn){
 		document.getElementById(onAnn).style.backgroundColor = "white";
@@ -71,11 +77,20 @@ function highlight(time){
 	}
 }
 
-//Function that runs with pre-populated annotations when the page is first loaded 
+// Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
 	table = $('#annotation-table');
-	var ann = [ { timestamp: 5, text: "hi"},
-							{ timestamp: 6, text: "how"}]
+	var ann = [ { timestamp: 1, text: "First annotation"},
+							{ timestamp: 4, text: "Second annotation"},
+							{ timestamp: 12, text: "Opportunity for ramp-up"},
+							{ timestamp: 30, text: "Bass drop"}]
 
 	displayAllAnnotations(ann);
 });
+
+// Check current time to highlight annotations
+window.setInterval(function() {
+	var time = Math.floor($("audio")[0].currentTime);
+	highlight(time);
+	document.getElementById("time").innerHTML = "Time: " + formatTimestamp(time);
+}, 100);
