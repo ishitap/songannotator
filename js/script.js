@@ -1,7 +1,8 @@
 // annotation -> { timestamp, text, displayID }
 
-var table;
-var annotations = [];
+var id_counter = 1;      // global for annotation ids
+var table;               // global referring to the annotation table
+var annotations = [];    // global data structure for annotations
 
 function formatTimestamp(timestamp) {
 	var min = Math.floor(timestamp / 60);
@@ -47,23 +48,22 @@ function getMotif(textVal, annotation){
 function displayAnnotation(annotation) {
 
 	annotation.timestamp = Number(annotation.timestamp);
-	annotation.displayID = '#' + annotation.timestamp;
+	annotation.displayID = id_counter++;
 
-	var tableRow = "<tr id='" + annotation.timestamp + "'><td>" + formatTimestamp(annotation.timestamp) 
+	var tableRow = "<tr id='" + annotation.displayID + "'><td>" + formatTimestamp(annotation.timestamp) 
 								+ "</td><td>" + annotation.text + "</td></tr>";
 
 	var index = findIndex(annotation)
 	var prevIndex = index - 1;
 
 	if (prevIndex >= 0) {
-		// console.log(annotation.timestamp + " not first")
-		var prev = table.find(annotations[prevIndex].displayID)
+		// if this annotation isn't first
+		var prev = table.find('#' + annotations[prevIndex].displayID)
 		prev.after(tableRow);
 	}
 	else 
+		// if this annotation is first
 		table.find('#heading-row').after(tableRow);
-
-	// console.log(annotations.length)
 
 	if (index >= annotations.length)
 		annotations.push(annotation);
@@ -89,8 +89,9 @@ function highlight(time){
 	}
 	for (i = 0; i < annotations.length; i++){
 		if (annotations[i]["timestamp"] == time){
-			document.getElementById(time).style.backgroundColor = "yellow";
-			onAnn = time;
+			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "yellow";
+			onAnn = annotations[i]["displayID"];
+			console.log(onAnn)
 		}
 	}
 }
