@@ -30,3 +30,13 @@ table, th, td {
 .annotation-hidden {
 	display: none;
 }
+
+.annotation-time {
+	border-right: 1px solid lightgray;
+}
+
+.annotation-time-input {
+	max-width: 40px;
+	outline: none;
+	display: none;
+}

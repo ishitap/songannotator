@@ -16,6 +16,12 @@ function formatTimestamp(timestamp) {
 	return formatted;
 }
 
+// converts xx:xx to seconds
+function formatTimeReverse(timestamp) {
+	var sections = timestamp.split(":");
+	return (Number(sections[0]) * 60) + Number(sections[1]);
+}
+
 // Helper Function: Finds the right spot for the annotation to be added within the time-wise sorted array
 function findIndex(annotation) {
 	var index = annotations.length;
@@ -53,7 +59,13 @@ function displayAnnotation(annotation) {
 	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
 
+	console.log(annotation)
+
+	console.log("sup")
+
 	var annotationHTML = annotationTemplate(annotation);
+
+	console.log("sup2")
 
 	var index = findIndex(annotation)
 	var prevIndex = index - 1;
@@ -90,6 +102,47 @@ function addAnnotationInteractions(annotation) {
 		var annotationToRemove = $(this).closest(".annotation");
 		removeAnnotation(annotationToRemove);
 	});
+
+	annotation.find(".annotation-time-display").click(function () {
+		$(this).hide();
+		var annotationTimeInput = $(this).next();
+		annotationTimeInput.show();
+	});
+
+	annotation.find(".annotation-time-input").on("blur keypress", function (e) {
+		if (e.which == 13 ) {
+			e.preventDefault();
+		}
+		if (e.type == "blur" || e.which == 13) {
+			$(this).hide();
+			$(this).prev().html($(this).val());
+			$(this).prev().show();
+			var annotation = $(this).closest(".annotation");
+			changeAnnotationTime(annotation, formatTimeReverse($(this).val()));
+		}
+	});
+}
+
+function changeAnnotationTime(annotation, newTimestamp) {
+	var displayID = annotation.attr("id");
+	var oldAnnotation = annotations[findAnnotation(displayID)];
+	var newAnnotation = {};
+	newAnnotation.text = oldAnnotation.text;
+	newAnnotation.timestamp = newTimestamp;
+	removeAnnotation(annotation);
+	displayAnnotation(newAnnotation);
+}
+
+function findAnnotation(displayID) {
+	var index = -1;
+	annotations.some(function (e, i, a) {
+			if(e.displayID == displayID) {
+				index = i;
+				return true;
+			}
+			return false;
+		});
+	return index;
 }
 
 function removeAnnotation(annotation) {
@@ -98,14 +151,7 @@ function removeAnnotation(annotation) {
 			$(this).remove();
 		});
 
-		var indexToRemove = -1;
-		annotations.some(function (e, i, a) {
-			if(e.displayID == displayID) {
-				indexToRemove = i;
-				return true;
-			}
-			return false;
-		});
+		var indexToRemove = findAnnotation(displayID);
 		if(indexToRemove != -1)
 			annotations.splice(indexToRemove, 1);
 }
