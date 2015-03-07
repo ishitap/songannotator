@@ -52,23 +52,33 @@ function addClickFunction(motifId){
 
 // }
 
+//Function to delete a motif
 function deleteFunction(motifId){
-	for (i = 0; i < annotations.length; i++){
-		if (annotations[i]["motifs"]){
-			mot = annotations[i]["motifs"].indexOf(motifId);
-			if (mot > -1){
-				annotations[i]["motifs"].splice(mot,1);
-			}
-		}
-	}
-	mot = 0;
+	var mot = 0;
+	var motText = "";
 	for (i = 0; i < motifs.length; i++){
 		if (motifs[i]["timestamp"] == motifId){
 			mot = i;
+			motText = motifs[i]["mName"];
 			break;
 		}
 	}
 	motifs.splice(mot,1);
+	for (i = 0; i < annotations.length; i++){
+		if (annotations[i]["motifs"]){
+			var aMot = annotations[i]["motifs"].indexOf(motifId);
+			if (aMot > -1){
+				annotations[i]["motifs"].splice(aMot,1);
+				var val = annotations[i]["text"];
+				var mVal = val.indexOf("#" + motText);
+				var firstPart = val.substring(0,mVal);
+				var secondPart = val.substring(mVal+motText.length+2,val.length);
+				annotations[i]["text"] = firstPart.concat(secondPart);
+				tableId = "#td" + annotations[i]["displayID"];
+				$(tableId)[0].innerHTML = annotations[i]["text"];
+			}
+		}
+	}
 	document.getElementById("motif-table").deleteRow(mot+1);
 }
 
