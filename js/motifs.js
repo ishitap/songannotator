@@ -56,7 +56,6 @@ function findMIndex(motif) {
 			break;
 		}
 	}
-	console.log(index);
 	return index;
 }
 
@@ -147,13 +146,14 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='filter("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
+	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='filter("+ motifId + ")'>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
 	console.log(prevMIndex);
 
 	if (prevMIndex >= 0) {
+		console.log(prevMIndex, motifs[prevMIndex].timestamp)
 		var prev = $('#motif-table').find('#' + motifs[prevMIndex].timestamp);
 		prev.after(tableRow);
 	}
@@ -169,16 +169,16 @@ function addMotif(motif, annotation) {
 
 function addInitialMotifs(){
 	motif1 = {mName:"formation-change", timestamp:Date.now(), ann:[]};
+	addMotif(motif1, null);
 	motif2 = {mName:"smooth-music", timestamp:Date.now(), ann:[]};
+	addMotif(motif2, null);
 	motif3 = {mName:"storyline", timestamp:Date.now(), ann:[]};
+	addMotif(motif3, null);
 	motif4 = {mName:"angry-flute", timestamp:Date.now(), ann:[]};
-	motif5 = {mName:"music-annotation", timestamp:Date.now(), ann:[]};
-	motif6 = {mName:"choreo-annotation", timestamp:Date.now(), ann:[]};
-	var motifArray = [motif1, motif2, motif3, motif4, motif5, motif6];
-	addMotif(motif1,null);
-	addMotif(motif2,null);
-	addMotif(motif3,null);
 	addMotif(motif4,null);
+	motif5 = {mName:"music-annotation", timestamp:Date.now(), ann:[]};
 	addMotif(motif5,null);
+	motif6 = {mName:"choreo-annotation", timestamp:Date.now(), ann:[]};
+	addMotif(motif6, null);
 }
 

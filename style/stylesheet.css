@@ -7,10 +7,18 @@ table {
 }
 
 table, th, td {
-	border-style: solid;
+	border-style: none;
 	border-width: 1px;
-	text-align: left;
-	padding: 10px;
+	text-align: center;
+	font-size: 16px;
+}
+
+tr{
+	height: 40px;
+}
+
+#first-row{
+	height: 0px;
 }
 
 * {
