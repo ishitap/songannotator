@@ -59,13 +59,7 @@ function displayAnnotation(annotation) {
 	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
 
-	console.log(annotation)
-
-	console.log("sup")
-
 	var annotationHTML = annotationTemplate(annotation);
-
-	console.log("sup2")
 
 	var index = findIndex(annotation)
 	var prevIndex = index - 1;
