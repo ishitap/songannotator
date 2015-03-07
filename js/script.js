@@ -122,7 +122,7 @@ onAnn = null;
 
 // Given a time in seconds, highlights that annotation to be yellow 
 function highlight(time){
-	if (onAnn){
+	if (onAnn && document.getElementById(onAnn)){
 		document.getElementById(onAnn).style.backgroundColor = "white";
 	}
 	for (i = 0; i < annotations.length; i++){
