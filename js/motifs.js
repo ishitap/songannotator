@@ -8,6 +8,7 @@ $("#motForm").submit(function() {
 	text = text.replace(/\s+/g, '');
 	var time = Date.now();
 	addMotif({mName: text, timestamp: time, ann: []}, null);
+	this.reset();
 });
 
 $("#filterForm").submit(function() {
@@ -25,7 +26,6 @@ $("#filterForm").submit(function() {
 			}
 		}
 	}
-	this.reset()
 });
 
 function clearFilter(){
@@ -33,6 +33,7 @@ function clearFilter(){
 		$("#" + annotations[j]["displayID"]).show();
 	}
 	$("#cFilter").hide();
+	$('input[name="filterText"]').val("")
 }
 
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
@@ -62,7 +63,7 @@ function addClickFunction(motifId){
 	displayAnnotation(ann);
 }
 
-//Adds motif to the annotation box
+// Adds motif to the annotation box
 // function addToAnnotation(motifId){
 // 	var text = "";
 // 	for (i = 0; i < motifs.length; i++){
