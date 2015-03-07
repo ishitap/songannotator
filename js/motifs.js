@@ -8,7 +8,6 @@ $("#motForm").submit(function() {
 	text = text.replace(/\s+/g, '');
 	var time = Date.now();
 	addMotif({mName: text, timestamp: time, ann: []}, null);
-	this.reset()
 });
 
 $("#filterForm").submit(function() {
@@ -21,12 +20,20 @@ $("#filterForm").submit(function() {
 				if (anns.indexOf(annotations[j]["displayID"]) == -1){
 					console.log(annotations[j]["displayID"]);
 					$("#" + annotations[j]["displayID"]).hide();
+					$("#cFilter").show();
 				}
 			}
 		}
 	}
 	this.reset()
 });
+
+function clearFilter(){
+	for (j = 0; j < annotations.length; j++){
+		$("#" + annotations[j]["displayID"]).show();
+	}
+	$("#cFilter").hide();
+}
 
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
 function findMIndex(motif) {
