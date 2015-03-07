@@ -28,6 +28,25 @@ function findIndex(annotation) {
 	return index;
 }	
 
+function getMotif(textVal, annotation){
+	i = 0;
+	annotation["motifs"] = []
+	while (i < textVal.length){
+		hashTag = textVal.indexOf('#',i);
+		if (hashTag == -1){
+			break;
+		}
+		space = textVal.indexOf(' ',hashTag);
+		if (space == -1){
+			space = textVal.length;
+		}		
+		tag = textVal.substring(hashTag+1,space);
+		newMotif = {mName: tag, timestamp:Date.now(), ann:[]};
+		addMotif(newMotif, annotation);
+		i = hashTag + 1;
+	}
+}
+
 // Displays the newly added annotation
 function displayAnnotation(annotation) {
 
