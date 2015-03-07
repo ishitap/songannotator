@@ -25,7 +25,7 @@ function findMIndex(motif) {
 }
 
 
-function clickFunction(motifId){
+function addClickFunction(motifId){
 	var text = "";
 	for (i = 0; i < motifs.length; i++){
 		if (motifs[i].timestamp == motifId){
@@ -36,6 +36,19 @@ function clickFunction(motifId){
 	var timing = Math.floor($("audio")[0].currentTime);
 	var ann = {timestamp: timing, text: text};
 	displayAnnotation(ann);
+}
+
+function addToAnnotation(motifId){
+	
+}
+
+function deleteFunction(motifId){
+	for (i = 0; i < annotations.length; i++){
+		if (annotations[i]["motifs"]){
+			mot = annotations[i]["motifs"].indexOf(motifId);
+
+		}
+	}
 }
 
 //Adds Motif to the Table Display
@@ -67,7 +80,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td>" + motif.mName + "</td><td><a href='#' onclick='clickFunction("+ motifId + ")' id='add" + motifId + "' class='addBtn'><img style='height:50px;' src='images/add.png'></img></a></td><td><img id='ugh' style='height:50px;' src='images/drag.png'></img></td><td><img style='height:50px;' src='images/delete.png'></img></td></tr>";
+	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='addClickFunction("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='addClickFunction("+ motifId + ")''><img style='height:50px;' src='images/add.png'></img></a></td><td><img id='ugh' style='height:50px;' src='images/drag.png'></img></td><td><img style='height:50px;' src='images/delete.png'></img></td></tr>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
