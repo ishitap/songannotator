@@ -94,13 +94,15 @@ function highlight(time){
 		if (annotations[i]["timestamp"] == time){
 			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "yellow";
 			onAnn = annotations[i]["displayID"];
-			console.log(onAnn)
 		}
 	}
 }
 
 // Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
+	$(".addBtn").click(function(){
+		console.log(this.id);
+	});
 	table = $('#annotation-table');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
 

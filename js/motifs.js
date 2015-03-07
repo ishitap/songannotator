@@ -24,6 +24,20 @@ function findMIndex(motif) {
 	return index;
 }
 
+
+function clickFunction(motifId){
+	var text = "";
+	for (i = 0; i < motifs.length; i++){
+		if (motifs[i].timestamp == motifId){
+			text = "#" + motifs[i].mName;
+			break;
+		}
+	}
+	var timing = Math.floor($("audio")[0].currentTime);
+	var ann = {timestamp: timing, text: text};
+	displayAnnotation(ann);
+}
+
 //Adds Motif to the Table Display
 function addMotif(motif, annotation) {
 	for (i = 0; i < motifs.length; i++){
@@ -53,7 +67,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td>" + motif.mName + "</td></tr>";
+	var tableRow = "<tr id='" + motifId + "'><td>" + motif.mName + "</td><td><a href='#' onclick='clickFunction("+ motifId + ")' id='add" + motifId + "' class='addBtn'><img style='height:50px;' src='images/add.png'></img></a></td><td><img id='ugh' style='height:50px;' src='images/drag.png'></img></td><td><img style='height:50px;' src='images/delete.png'></img></td></tr>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
