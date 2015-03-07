@@ -4,6 +4,8 @@ var id_counter = 1;      // global for annotation ids
 var table;               // global referring to the annotation table
 var annotations = [];    // global data structure for annotations
 
+var annotationTemplate;
+
 function formatTimestamp(timestamp) {
 	var min = Math.floor(timestamp / 60);
 	var sec = timestamp % 60;
@@ -30,10 +32,10 @@ function findIndex(annotation) {
 function displayAnnotation(annotation) {
 
 	annotation.timestamp = Number(annotation.timestamp);
+	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
 
-	var tableRow = "<tr id='" + annotation.displayID + "'><td>" + formatTimestamp(annotation.timestamp) 
-								+ "</td><td>" + annotation.text + "</td></tr>";
+	var annotationHTML = annotationTemplate(annotation);
 
 	var index = findIndex(annotation)
 	var prevIndex = index - 1;
@@ -41,11 +43,11 @@ function displayAnnotation(annotation) {
 	if (prevIndex >= 0) {
 		// if this annotation isn't first
 		var prev = table.find('#' + annotations[prevIndex].displayID)
-		prev.after(tableRow);
+		prev.after(annotationHTML);
 	}
 	else 
 		// if this annotation is first
-		table.find('#heading-row').after(tableRow);
+		table.find('#heading-row').after(annotationHTML);
 
 	if (index >= annotations.length)
 		annotations.push(annotation);
@@ -81,6 +83,8 @@ function highlight(time){
 // Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
 	table = $('#annotation-table');
+	annotationTemplate = Handlebars.compile($("#annotation-template").html());
+
 	var ann = [ { timestamp: 1, text: "First annotation"},
 							{ timestamp: 4, text: "Second annotation"},
 							{ timestamp: 12, text: "Opportunity for ramp-up"},
@@ -95,3 +99,15 @@ window.setInterval(function() {
 	highlight(time);
 	document.getElementById("time").innerHTML = "Time: " + formatTimestamp(time);
 }, 100);
+
+$(".annotation").on("mousein", function () {
+	// display little x
+});
+
+$(".annotation").on("mouseout", function () {
+	// remove little x
+});
+
+$(".delete-annotation").on("click", function () {
+	//delete annotation
+})

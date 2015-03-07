@@ -26,7 +26,15 @@
 		</table>
 	</div>
 
+	<script id="annotation-template" type="text/x-handlebars-template">
+		<tr class="annotation" id="{{displayID}}">
+			<td>{{displayTime}}</td>
+			<td>{{text}}</td>
+		</tr>
+	</script>
+
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="js/handlebars-v3.0.0.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/form.js"></script>
 </body>
