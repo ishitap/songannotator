@@ -49,7 +49,6 @@ function getMotif(textVal, annotation){
 
 // Displays the newly added annotation
 function displayAnnotation(annotation) {
-
 	annotation.timestamp = Number(annotation.timestamp);
 	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
@@ -58,6 +57,7 @@ function displayAnnotation(annotation) {
 
 	var index = findIndex(annotation)
 	var prevIndex = index - 1;
+	var annotationObj;
 
 	if (prevIndex >= 0) {
 		// if this annotation isn't first
@@ -74,24 +74,27 @@ function displayAnnotation(annotation) {
 		annotations.splice(index, 0, annotation);
 	}
 
-	$(".annotation, .annoation .panel-body").on("mouseover", function () {
-		$(this).find(".annotation-control").show();
-	});
+	addAnnotationInteractions($("#" + annotation.displayID));
+}
 
-	$(".annotation").on("mouseout", function () {
-		$(this).find(".annotation-control").hide();
-	});
+function addAnnotationInteractions(annotation) {
+	annotation.slideDown()
+		.mouseover(function () {
+			$(this).find(".annotation-control").show();
+		})
+		.mouseout(function () {
+			$(this).find(".annotation-control").hide();
+		});
 
-	$(".remove-annotation").on("click", function () {
+	annotation.find(".remove-annotation").click(function () {
 		var annotationToRemove = $(this).closest(".annotation");
 		removeAnnotation(annotationToRemove);
 	});
-
 }
 
-function removeAnnotation(clickedAnnotation) {
-	var displayID = clickedAnnotation.attr("id");
-		clickedAnnotation.slideUp(400, function () {
+function removeAnnotation(annotation) {
+	var displayID = annotation.attr("id");
+		annotation.slideUp(400, function () {
 			$(this).remove();
 		});
 
