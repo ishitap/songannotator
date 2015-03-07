@@ -24,7 +24,7 @@ function findMIndex(motif) {
 	return index;
 }
 
-
+//Adds motif directly as an annotation
 function addClickFunction(motifId){
 	var text = "";
 	for (i = 0; i < motifs.length; i++){
@@ -38,17 +38,38 @@ function addClickFunction(motifId){
 	displayAnnotation(ann);
 }
 
-function addToAnnotation(motifId){
-	
-}
+//Adds motif to the annotation box
+// function addToAnnotation(motifId){
+// 	var text = "";
+// 	for (i = 0; i < motifs.length; i++){
+// 		if (motifs[i].timestamp == motifId){
+// 			text = "#" + motifs[i].mName + " ";
+// 			break;
+// 		}
+// 	}
+// 	var startVal = $('input[name="text"]').val();
+// 	$('input[name="text"]').val(startVal.concat(text));
+
+// }
 
 function deleteFunction(motifId){
 	for (i = 0; i < annotations.length; i++){
 		if (annotations[i]["motifs"]){
 			mot = annotations[i]["motifs"].indexOf(motifId);
-
+			if (mot > -1){
+				annotations[i]["motifs"].splice(mot,1);
+			}
 		}
 	}
+	mot = 0;
+	for (i = 0; i < motifs.length; i++){
+		if (motifs[i]["timestamp"] == motifId){
+			mot = i;
+			break;
+		}
+	}
+	motifs.splice(mot,1);
+	document.getElementById("motif-table").deleteRow(mot+1);
 }
 
 //Adds Motif to the Table Display
@@ -80,7 +101,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='addClickFunction("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='addClickFunction("+ motifId + ")''><img style='height:50px;' src='images/add.png'></img></a></td><td><img id='ugh' style='height:50px;' src='images/drag.png'></img></td><td><img style='height:50px;' src='images/delete.png'></img></td></tr>";
+	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='addClickFunction("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
