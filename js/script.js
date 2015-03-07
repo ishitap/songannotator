@@ -1,7 +1,7 @@
 // annotation -> { timestamp, text, displayID }
 
 var id_counter = 1;      // global for annotation ids
-var table;               // global referring to the annotation table
+var annotationList;               // global referring to the annotation table
 var annotations = [];    // global data structure for annotations
 
 var annotationTemplate;
@@ -61,12 +61,12 @@ function displayAnnotation(annotation) {
 
 	if (prevIndex >= 0) {
 		// if this annotation isn't first
-		var prev = table.find('#' + annotations[prevIndex].displayID)
+		var prev = annotationList.find('#' + annotations[prevIndex].displayID)
 		prev.after(annotationHTML);
 	}
 	else 
 		// if this annotation is first
-		table.find('#heading-row').after(annotationHTML);
+		annotationList.prepend(annotationHTML);
 
 	if (index >= annotations.length)
 		annotations.push(annotation);
@@ -94,14 +94,13 @@ function highlight(time){
 		if (annotations[i]["timestamp"] == time){
 			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "yellow";
 			onAnn = annotations[i]["displayID"];
-			console.log(onAnn)
 		}
 	}
 }
 
 // Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
-	table = $('#annotation-table');
+	annotationList = $('#annotation-list');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
 
 	var ann = [ { timestamp: 1, text: "First annotation"},
