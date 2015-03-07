@@ -124,7 +124,7 @@ function highlight(time){
 	}
 	for (i = 0; i < annotations.length; i++){
 		if (annotations[i]["timestamp"] == time){
-			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "yellow";
+			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "#d6e9c6";
 			onAnn = annotations[i]["displayID"];
 		}
 	}
