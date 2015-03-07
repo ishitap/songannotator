@@ -3,6 +3,8 @@
 var id_counter = 1;      // global for annotation ids
 var annotationList;               // global referring to the annotation table
 var annotations = [];    // global data structure for annotations
+// Global variable which stores the id of the annotation which is currently "on", if any
+onAnn = null;
 
 var annotationTemplate;
 
@@ -156,9 +158,6 @@ function displayAllAnnotations(annotations) {
 		displayAnnotation(e);
 	});
 }
-
-// Global variable which stores the id of the annotation which is currently "on", if any
-onAnn = null;
 
 // Given a time in seconds, highlights that annotation to be yellow 
 function highlight(time){
