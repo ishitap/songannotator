@@ -5,6 +5,7 @@ var motifs = [];
 $("#motForm").submit(function() {
 	event.preventDefault();
 	var text = $('input[name="motText"]').val();
+	text = text.replace(/\s+/g, '');
 	var time = Date.now();
 	addMotif({mName: text, timestamp: time, ann: []}, null);
 	this.reset()
