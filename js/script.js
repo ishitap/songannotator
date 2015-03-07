@@ -1,7 +1,7 @@
 // annotation -> { timestamp, text, displayID }
 
 var id_counter = 1;      // global for annotation ids
-var table;               // global referring to the annotation table
+var annotationList;               // global referring to the annotation table
 var annotations = [];    // global data structure for annotations
 
 var annotationTemplate;
@@ -49,7 +49,6 @@ function getMotif(textVal, annotation){
 
 // Displays the newly added annotation
 function displayAnnotation(annotation) {
-
 	annotation.timestamp = Number(annotation.timestamp);
 	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
@@ -58,21 +57,57 @@ function displayAnnotation(annotation) {
 
 	var index = findIndex(annotation)
 	var prevIndex = index - 1;
+	var annotationObj;
 
 	if (prevIndex >= 0) {
 		// if this annotation isn't first
-		var prev = table.find('#' + annotations[prevIndex].displayID)
+		var prev = annotationList.find('#' + annotations[prevIndex].displayID)
 		prev.after(annotationHTML);
 	}
 	else 
 		// if this annotation is first
-		table.find('#heading-row').after(annotationHTML);
+		annotationList.prepend(annotationHTML);
 
 	if (index >= annotations.length)
 		annotations.push(annotation);
 	else {
 		annotations.splice(index, 0, annotation);
 	}
+
+	addAnnotationInteractions($("#" + annotation.displayID));
+}
+
+function addAnnotationInteractions(annotation) {
+	annotation.slideDown()
+		.mouseover(function () {
+			$(this).find(".annotation-control").show();
+		})
+		.mouseout(function () {
+			$(this).find(".annotation-control").hide();
+		});
+
+	annotation.find(".remove-annotation").click(function () {
+		var annotationToRemove = $(this).closest(".annotation");
+		removeAnnotation(annotationToRemove);
+	});
+}
+
+function removeAnnotation(annotation) {
+	var displayID = annotation.attr("id");
+		annotation.slideUp(400, function () {
+			$(this).remove();
+		});
+
+		var indexToRemove = -1;
+		annotations.some(function (e, i, a) {
+			if(e.displayID == displayID) {
+				indexToRemove = i;
+				return true;
+			}
+			return false;
+		});
+		if(indexToRemove != -1)
+			annotations.splice(indexToRemove, 1);
 }
 
 // Displays all the annotations that are already present
@@ -87,12 +122,12 @@ onAnn = null;
 
 // Given a time in seconds, highlights that annotation to be yellow 
 function highlight(time){
-	if (onAnn){
+	if (onAnn && document.getElementById(onAnn)){
 		document.getElementById(onAnn).style.backgroundColor = "white";
 	}
 	for (i = 0; i < annotations.length; i++){
 		if (annotations[i]["timestamp"] == time){
-			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "yellow";
+			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "#d6e9c6";
 			onAnn = annotations[i]["displayID"];
 		}
 	}
@@ -100,13 +135,11 @@ function highlight(time){
 
 // Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
-	$(".addBtn").click(function(){
-		console.log(this.id);
-	});
 	table = $('#annotation-table');
+	annotationList = $('#annotation-list');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
 
-	var ann = [ { timestamp: 1, text: "First annotation"},
+	ann = [ { timestamp: 1, text: "First annotation"},
 							{ timestamp: 4, text: "Second annotation"},
 							{ timestamp: 12, text: "Opportunity for ramp-up"},
 							{ timestamp: 30, text: "Bass drop"}]
@@ -120,15 +153,3 @@ window.setInterval(function() {
 	highlight(time);
 	document.getElementById("time").innerHTML = "Time: " + formatTimestamp(time);
 }, 100);
-
-$(".annotation").on("mousein", function () {
-	// display little x
-});
-
-$(".annotation").on("mouseout", function () {
-	// remove little x
-});
-
-$(".delete-annotation").on("click", function () {
-	//delete annotation
-})
