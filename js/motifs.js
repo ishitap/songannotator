@@ -11,6 +11,23 @@ $("#motForm").submit(function() {
 	this.reset()
 });
 
+$("#filterForm").submit(function() {
+	event.preventDefault();
+	var text = $('input[name="filterText"]').val();
+	for (i = 0; i < motifs.length; i++){
+		if (motifs[i]["mName"] == text){
+			var anns = motifs[i]["ann"];
+			for (j = 0; j < annotations.length; j++){
+				if (anns.indexOf(annotations[j]["displayID"]) == -1){
+					console.log(annotations[j]["displayID"]);
+					$("#" + annotations[j]["displayID"]).hide();
+				}
+			}
+		}
+	}
+	this.reset()
+});
+
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
 function findMIndex(motif) {
 	var index = motifs.length;
