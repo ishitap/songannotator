@@ -17,3 +17,8 @@ table, th, td {
 	font-family: "Helvetica Neue", serif;
 	font-weight: 300;
 }
+
+.motDiv{
+	position: relative;
+	padding-top: 10%;
+}

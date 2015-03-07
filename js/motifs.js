@@ -29,6 +29,12 @@ function addMotif(motif, annotation) {
 		if (motifs[i].mName == motif.mName){
 			if (annotation){
 				motifs[i].ann.push(annotation.displayID);
+				if (annotation["motifs"]){
+					annotation["motifs"].push(motifs[i].timestamp);
+				}
+				else{
+					annotation["motifs"] = [motifs[i].timestamp];
+				}
 			}
 			return;
 		}
@@ -36,6 +42,12 @@ function addMotif(motif, annotation) {
 
 	if(annotation){
 		motif.ann.push(annotation.displayID);
+		if (annotation["motifs"]){
+			annotation["motifs"].push(motif.timestamp);
+		}
+		else{
+			annotation["motifs"] = [motif.timestamp];
+		}
 	}
 
 	motifId = motif.timestamp;	

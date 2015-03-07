@@ -28,6 +28,7 @@ function findIndex(annotation) {
 
 function getMotif(textVal, annotation){
 	i = 0;
+	annotation["motifs"] = []
 	while (i < textVal.length){
 		hashTag = textVal.indexOf('#',i);
 		if (hashTag == -1){
