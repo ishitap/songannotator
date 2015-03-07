@@ -73,6 +73,38 @@ function displayAnnotation(annotation) {
 	else {
 		annotations.splice(index, 0, annotation);
 	}
+
+	$(".annotation, .annoation .panel-body").on("mouseover", function () {
+		$(this).find(".annotation-control").show();
+	});
+
+	$(".annotation").on("mouseout", function () {
+		$(this).find(".annotation-control").hide();
+	});
+
+	$(".remove-annotation").on("click", function () {
+		var annotationToRemove = $(this).closest(".annotation");
+		removeAnnotation(annotationToRemove);
+	});
+
+}
+
+function removeAnnotation(clickedAnnotation) {
+	var displayID = clickedAnnotation.attr("id");
+		clickedAnnotation.slideUp(400, function () {
+			$(this).remove();
+		});
+
+		var indexToRemove = -1;
+		annotations.some(function (e, i, a) {
+			if(e.displayID == displayID) {
+				indexToRemove = i;
+				return true;
+			}
+			return false;
+		});
+		if(indexToRemove != -1)
+			annotations.splice(indexToRemove, 1);
 }
 
 // Displays all the annotations that are already present
@@ -103,7 +135,7 @@ $(document).ready(function () {
 	annotationList = $('#annotation-list');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
 
-	var ann = [ { timestamp: 1, text: "First annotation"},
+	ann = [ { timestamp: 1, text: "First annotation"},
 							{ timestamp: 4, text: "Second annotation"},
 							{ timestamp: 12, text: "Opportunity for ramp-up"},
 							{ timestamp: 30, text: "Bass drop"}]
@@ -117,15 +149,3 @@ window.setInterval(function() {
 	highlight(time);
 	document.getElementById("time").innerHTML = "Time: " + formatTimestamp(time);
 }, 100);
-
-$(".annotation").on("mousein", function () {
-	// display little x
-});
-
-$(".annotation").on("mouseout", function () {
-	// remove little x
-});
-
-$(".delete-annotation").on("click", function () {
-	//delete annotation
-})

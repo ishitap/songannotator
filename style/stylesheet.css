@@ -22,3 +22,7 @@ table, th, td {
 	position: relative;
 	padding-top: 10%;
 }
+
+.annotation-control {
+	display: none;	
+}
