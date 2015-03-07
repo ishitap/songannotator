@@ -135,6 +135,7 @@ function highlight(time){
 
 // Function that runs with pre-populated annotations when the page is first loaded 
 $(document).ready(function () {
+	table = $('#annotation-table');
 	annotationList = $('#annotation-list');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
 
