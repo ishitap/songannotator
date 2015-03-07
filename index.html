@@ -54,8 +54,11 @@
 	<script id="annotation-template" type="text/x-handlebars-template">
 		<div class="panel panel-default annotation annotation-hidden" id="{{displayID}}">
 			<div class="panel-body">
-				<div class="col-md-11">
-					{{displayTime}} -- {{text}}
+				<div class="col-md-1 annotation-time">
+					{{displayTime}}
+				</div>
+				<div class="col-md-10">
+					{{text}}
 				</div>
 				<div class="col-md-1 annotation-control">
 				<span class="glyphicon glyphicon-remove remove-annotation" aria-hidden="true"></span>
