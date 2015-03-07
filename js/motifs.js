@@ -21,19 +21,30 @@ $("#filterForm").submit(function() {
 				if (anns.indexOf(annotations[j]["displayID"]) == -1){
 					console.log(annotations[j]["displayID"]);
 					$("#" + annotations[j]["displayID"]).hide();
-					$("#cFilter").show();
 				}
 			}
 		}
 	}
 });
 
+function filter(motifId){
+	for (i = 0; i < motifs.length; i++){
+		if (motifs[i]["timestamp"] == motifId){
+			var anns = motifs[i]["ann"];
+			for (j = 0; j < annotations.length; j++){
+				if (anns.indexOf(annotations[j]["displayID"]) == -1){
+					console.log(annotations[j]["displayID"]);
+					$("#" + annotations[j]["displayID"]).hide();
+				}
+			}
+		}
+	}	
+}
+
 function clearFilter(){
 	for (j = 0; j < annotations.length; j++){
 		$("#" + annotations[j]["displayID"]).show();
 	}
-	$("#cFilter").hide();
-	$('input[name="filterText"]').val("")
 }
 
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
@@ -136,7 +147,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='addClickFunction("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
+	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='filter("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
@@ -154,5 +165,20 @@ function addMotif(motif, annotation) {
 	else {
 		motifs.splice(mIndex, 0, motif);
 	}
+}
+
+function addInitialMotifs(){
+	motif1 = {mName:"formation-change", timestamp:Date.now(), ann:[]};
+	motif2 = {mName:"smooth-music", timestamp:Date.now(), ann:[]};
+	motif3 = {mName:"storyline", timestamp:Date.now(), ann:[]};
+	motif4 = {mName:"angry-flute", timestamp:Date.now(), ann:[]};
+	motif5 = {mName:"music-annotation", timestamp:Date.now(), ann:[]};
+	motif6 = {mName:"choreo-annotation", timestamp:Date.now(), ann:[]};
+	var motifArray = [motif1, motif2, motif3, motif4, motif5, motif6];
+	addMotif(motif1,null);
+	addMotif(motif2,null);
+	addMotif(motif3,null);
+	addMotif(motif4,null);
+	addMotif(motif5,null);
 }
 

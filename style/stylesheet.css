@@ -18,10 +18,10 @@ table, th, td {
 	font-weight: 300;
 }
 
-.motDiv{
+/*.motDiv{
 	position: relative;
 	padding-top: 10%;
-}
+}*/
 
 .annotation-control {
 	display: none;	

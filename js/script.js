@@ -145,6 +145,7 @@ $(document).ready(function () {
 							{ timestamp: 30, text: "Bass drop"}]
 
 	displayAllAnnotations(ann);
+	addInitialMotifs();
 });
 
 // Check current time to highlight annotations

@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="style/bootstrap.min.css">
 </head>
 <body>
-	<div class="col-md-4">
+	<div>
 		<div>
 			<h3>Song</h3>
 			<audio src="feelsoclose.mp3" controls="controls">
@@ -20,14 +20,14 @@
 			Annotation: <input type="text" name="text"></input>
 			<input type="submit" value="Add"></input>
 		</form>
-		<p>Type "#" before a motif, or click on the motif on the panel to the right, to add it to an annotation!</p>
-		<form id="filterForm">
+		<p>Type "#" before a motif to tag an annotation!</p>
+	<!-- 	<form id="filterForm">
 			Filter by Motif: <input type="text" name="filterText"></input>
 			<input type="submit" value="Filter"></input>
 			<a href='#' id="cFilter" style="display:none;" onclick="clearFilter()"><img style='height:20px;' src='images/delete.png'></img></a>
 		</form>
-
-		<div id="annotation-display">
+ -->
+		<div class = "col-md-4" id="annotation-display">
 			<h2>Annotations</h2>
 			<div id="annotation-list">
 			</div>
@@ -38,15 +38,14 @@
 
 
 	<div class="col-md-6 motDiv">
-		<form id="motForm">
+<!-- 		<form id="motForm">
 			Add Motif: <input type="text" name="motText"></input>
 			<input type="submit" value="Add"></input>
-		</form>
+		</form> -->
 		<div id="motif-display">
 			<h2>Motifs</h2>
 			<table id="motif-table">
 				<tr id="first-row">
-					<th>Motif</th>
 			</table>
 		</div>
 	</div>
