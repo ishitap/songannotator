@@ -48,8 +48,10 @@ function filter(motifId){
 					if (anns.indexOf(annotations[j]["displayID"]) == -1){
 						console.log(annotations[j]["displayID"]);
 						$("#" + annotations[j]["displayID"]).hide();
+						annotations[j].tick.visible = false;
 					}
 				}
+				view.draw();
 				var showText = "Showing " + anns.length + " of " + annotations.length + " annotations";
 				$('#filterText').text(showText);
 				$('#filterText').show();
@@ -66,7 +68,9 @@ function filter(motifId){
 function clearFilter(){
 	for (j = 0; j < annotations.length; j++){
 		$("#" + annotations[j]["displayID"]).show();
+		annotations[j].tick.visible = true;
 	}
+	view.draw();
 	$('#filterText').text("No Annotations Match this Tag");
 	$('#filterText').hide();
 }
