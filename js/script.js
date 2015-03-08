@@ -117,18 +117,6 @@ function addAnnotationInteractions(annotation) {
 
 function changeAnnotationTime(annotation, newTimestamp) {
 	var displayID = annotation.attr("id");
-<<<<<<< HEAD
-	var actualAnn;
-	for (i = 0; i < annotations.length; i++){
-		if (displayID == annotations[i].displayID){
-			actualAnn = annotations[i];
-			break;
-		}
-	}
-		annotation.slideUp(400, function () {
-			$(this).remove();
-		});
-=======
 	var oldAnnotation = annotations[findAnnotation(displayID)];
 	var newAnnotation = {};
 	newAnnotation.text = oldAnnotation.text;
@@ -136,7 +124,6 @@ function changeAnnotationTime(annotation, newTimestamp) {
 	removeAnnotation(annotation);
 	displayAnnotation(newAnnotation);
 }
->>>>>>> master
 
 function findAnnotation(displayID) {
 	var index = -1;
@@ -152,6 +139,13 @@ function findAnnotation(displayID) {
 
 function removeAnnotation(annotation) {
 	var displayID = annotation.attr("id");
+	var actualAnn;
+	for (i = 0; i < annotations.length; i++){
+		if (displayID == annotations[i].displayID){
+			actualAnn = annotations[i];
+			break;
+		}
+	}
 		annotation.slideUp(400, function () {
 			$(this).remove();
 		});
