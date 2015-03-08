@@ -150,7 +150,11 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "</a></ul>";
+	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-annotation' aria-hidden='true' style='display:none;'></span></ul>";
+
+	$('#' + motifId).mouseover(function(){
+		console.log("hello");
+	})
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
@@ -179,8 +183,6 @@ function addInitialMotifs(){
 	addMotif(motif2, null);
 	motif3 = {mName:"storyline", timestamp:time+2, ann:[]};
 	addMotif(motif3, null);
-	motif4 = {mName:"angry-flute", timestamp:time+3, ann:[]};
-	addMotif(motif4,null);
 	motif5 = {mName:"music-annotation", timestamp:time+4, ann:[]};
 	addMotif(motif5,null);
 	motif6 = {mName:"choreo-annotation", timestamp:time+5, ann:[]};

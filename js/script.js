@@ -94,6 +94,13 @@ function addAnnotationInteractions(annotation) {
 
 function removeAnnotation(annotation) {
 	var displayID = annotation.attr("id");
+	var actualAnn;
+	for (i = 0; i < annotations.length; i++){
+		if (displayID == annotations[i].displayID){
+			actualAnn = annotations[i];
+			break;
+		}
+	}
 		annotation.slideUp(400, function () {
 			$(this).remove();
 		});
@@ -108,6 +115,13 @@ function removeAnnotation(annotation) {
 		});
 		if(indexToRemove != -1)
 			annotations.splice(indexToRemove, 1);
+	var annMotifs = actualAnn.motifs;
+	for (i = 0; i < motifs.length; i++){
+		if (annMotifs.indexOf(motifs[i].timestamp) > -1){
+			annLocation = motifs[i].ann.indexOf(displayID);
+			motifs[i].ann.splice(annLocation,1);
+		}
+	}
 }
 
 // Displays all the annotations that are already present
