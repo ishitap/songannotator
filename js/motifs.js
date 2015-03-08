@@ -19,7 +19,6 @@ $("#filterForm").submit(function() {
 			var anns = motifs[i]["ann"];
 			for (j = 0; j < annotations.length; j++){
 				if (anns.indexOf(annotations[j]["displayID"]) == -1){
-					console.log(annotations[j]["displayID"]);
 					$("#" + annotations[j]["displayID"]).hide();
 				}
 			}
@@ -28,23 +27,41 @@ $("#filterForm").submit(function() {
 });
 
 function filter(motifId){
-	for (i = 0; i < motifs.length; i++){
-		if (motifs[i]["timestamp"] == motifId){
-			var anns = motifs[i]["ann"];
-			for (j = 0; j < annotations.length; j++){
-				if (anns.indexOf(annotations[j]["displayID"]) == -1){
-					console.log(annotations[j]["displayID"]);
-					$("#" + annotations[j]["displayID"]).hide();
+	if ($('#link' + motifId).attr('class') == 'unclicked'){
+		for (i = 0; i < motifs.length; i++){
+			if (motifs[i]["timestamp"] == motifId){
+				var anns = motifs[i]["ann"];
+				console.log("ANNS", anns);
+				if (anns.length == 0){
+					clearFilter();
+					$('#link' + motifId).toggleClass('clicked');
+					$('#filterText').show();
+					return;
 				}
+				for (j = 0; j < annotations.length; j++){
+					if (anns.indexOf(annotations[j]["displayID"]) == -1){
+						console.log(annotations[j]["displayID"]);
+						$("#" + annotations[j]["displayID"]).hide();
+					}
+				}
+				var showText = "Showing " + anns.length + " of " + annotations.length + " annotations";
+				$('#filterText').text(showText);
+				$('#filterText').show();
 			}
 		}
+	}
+	else{
+		clearFilter();
 	}	
+	$('#link' + motifId).toggleClass('clicked');
 }
 
 function clearFilter(){
 	for (j = 0; j < annotations.length; j++){
 		$("#" + annotations[j]["displayID"]).show();
 	}
+	$('#filterText').text("No Annotations Match this Tag");
+	$('#filterText').hide();
 }
 
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
@@ -73,19 +90,6 @@ function addClickFunction(motifId){
 	displayAnnotation(ann);
 }
 
-// Adds motif to the annotation box
-// function addToAnnotation(motifId){
-// 	var text = "";
-// 	for (i = 0; i < motifs.length; i++){
-// 		if (motifs[i].timestamp == motifId){
-// 			text = "#" + motifs[i].mName + " ";
-// 			break;
-// 		}
-// 	}
-// 	var startVal = $('input[name="text"]').val();
-// 	$('input[name="text"]').val(startVal.concat(text));
-
-// }
 
 //Function to delete a motif
 function deleteFunction(motifId){
@@ -146,19 +150,19 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='filter("+ motifId + ")'>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
+	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "</a></ul>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
-	console.log(prevMIndex);
 
 	if (prevMIndex >= 0) {
-		console.log(prevMIndex, motifs[prevMIndex].timestamp)
-		var prev = $('#motif-table').find('#' + motifs[prevMIndex].timestamp);
-		prev.after(tableRow);
+		console.log(motif.mName, prevMIndex, motifs[prevMIndex].mName, motifs[prevMIndex].timestamp)
+		var prev = $('#motif-list').find('#' + motifs[prevMIndex].timestamp);
+		prev.after(newElem);
 	}
-	else 
-		$('#motif-table').find('#first-row').after(tableRow);
+	else{ 
+		$('#motif-list').find('#first-elem').after(newElem);
+	}
 
 	if (mIndex >= motifs.length)
 		motifs.push(motif);
@@ -168,17 +172,18 @@ function addMotif(motif, annotation) {
 }
 
 function addInitialMotifs(){
-	motif1 = {mName:"formation-change", timestamp:Date.now(), ann:[]};
+	time = Date.now();
+	motif1 = {mName:"formation-change", timestamp:time, ann:[]};
 	addMotif(motif1, null);
-	motif2 = {mName:"smooth-music", timestamp:Date.now(), ann:[]};
+	motif2 = {mName:"smooth-music", timestamp:time+1, ann:[]};
 	addMotif(motif2, null);
-	motif3 = {mName:"storyline", timestamp:Date.now(), ann:[]};
+	motif3 = {mName:"storyline", timestamp:time+2, ann:[]};
 	addMotif(motif3, null);
-	motif4 = {mName:"angry-flute", timestamp:Date.now(), ann:[]};
+	motif4 = {mName:"angry-flute", timestamp:time+3, ann:[]};
 	addMotif(motif4,null);
-	motif5 = {mName:"music-annotation", timestamp:Date.now(), ann:[]};
+	motif5 = {mName:"music-annotation", timestamp:time+4, ann:[]};
 	addMotif(motif5,null);
-	motif6 = {mName:"choreo-annotation", timestamp:Date.now(), ann:[]};
+	motif6 = {mName:"choreo-annotation", timestamp:time+5, ann:[]};
 	addMotif(motif6, null);
 }
 
