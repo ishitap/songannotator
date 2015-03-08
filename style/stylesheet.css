@@ -94,3 +94,7 @@ a{
 	width: 400px;
 	height: 100px;
 }
+
+.highlighted {
+	background-color: #d6e9c6;
+}

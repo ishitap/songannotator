@@ -39,3 +39,13 @@ function removeTick(annotation) {
 		tick.remove();
 	view.draw();
 }
+
+function highlightTick(annotation) {
+	annotation.tick.strokeColor = '#d6e9c6';
+	view.draw();
+}
+
+function unhighlightTick(annotation) {
+	annotation.tick.strokeColor = 'black';
+	view.draw();
+}

@@ -173,15 +173,30 @@ function displayAllAnnotations(annotations) {
 
 // Given a time in seconds, highlights that annotation to be yellow 
 function highlight(time){
-	if (onAnn && document.getElementById(onAnn)){
-		document.getElementById(onAnn).style.backgroundColor = "white";
+	if (onAnn && $('#' + onAnn.displayID)) {
+		$('#' + onAnn.displayID).removeClass("highlighted");
+		unhighlightTick(onAnn);
 	}
-	for (i = 0; i < annotations.length; i++){
-		if (annotations[i]["timestamp"] == time){
-			document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "#d6e9c6";
-			onAnn = annotations[i]["displayID"];
+	for (i = 0; i < annotations.length; i++) {
+		if (annotations[i].timestamp == time) {
+			$('#' + annotations[i].displayID).addClass("highlighted");
+			highlightTick(annotations[i]);
+			onAnn = annotations[i];
 		}
 	}
+
+
+
+
+	// if (onAnn && document.getElementById(onAnn)){
+	// 	document.getElementById(onAnn).style.backgroundColor = "white";
+	// }
+	// for (i = 0; i < annotations.length; i++){
+	// 	if (annotations[i]["timestamp"] == time){
+	// 		document.getElementById(annotations[i]["displayID"]).style.backgroundColor = "#d6e9c6";
+	// 		onAnn = annotations[i]["displayID"];
+	// 	}
+	// }
 }
 
 // Function that runs with pre-populated annotations when the page is first loaded 
