@@ -3,6 +3,9 @@
 var id_counter = 1;      // global for annotation ids
 var annotationList;               // global referring to the annotation table
 var annotations = [];    // global data structure for annotations
+// Global variable which stores the id of the annotation which is currently "on", if any
+onAnn = null;
+var canvas;
 
 var annotationTemplate;
 
@@ -14,6 +17,12 @@ function formatTimestamp(timestamp) {
 	}
 	var formatted = min + ":" + sec;
 	return formatted;
+}
+
+// converts xx:xx to seconds
+function formatTimeReverse(timestamp) {
+	var sections = timestamp.split(":");
+	return (Number(sections[0]) * 60) + Number(sections[1]);
 }
 
 // Helper Function: Finds the right spot for the annotation to be added within the time-wise sorted array
@@ -60,21 +69,16 @@ function displayAnnotation(annotation) {
 	var annotationObj;
 
 	if (prevIndex >= 0) {
-		// if this annotation isn't first
 		var prev = annotationList.find('#' + annotations[prevIndex].displayID)
 		prev.after(annotationHTML);
 	}
 	else 
-		// if this annotation is first
 		annotationList.prepend(annotationHTML);
 
-	if (index >= annotations.length)
-		annotations.push(annotation);
-	else {
-		annotations.splice(index, 0, annotation);
-	}
-
+	annotations.splice(index, 0, annotation);
 	addAnnotationInteractions($("#" + annotation.displayID));
+	annotation.tick = drawTick(annotation.timestamp);
+	console.log(annotation.tick)
 }
 
 function addAnnotationInteractions(annotation) {
@@ -90,10 +94,30 @@ function addAnnotationInteractions(annotation) {
 		var annotationToRemove = $(this).closest(".annotation");
 		removeAnnotation(annotationToRemove);
 	});
+
+	annotation.find(".annotation-time-display").click(function () {
+		$(this).hide();
+		var annotationTimeInput = $(this).next();
+		annotationTimeInput.show();
+	});
+
+	annotation.find(".annotation-time-input").on("blur keypress", function (e) {
+		if (e.which == 13 ) {
+			e.preventDefault();
+		}
+		if (e.type == "blur" || e.which == 13) {
+			$(this).hide();
+			$(this).prev().html($(this).val());
+			$(this).prev().show();
+			var annotation = $(this).closest(".annotation");
+			changeAnnotationTime(annotation, formatTimeReverse($(this).val()));
+		}
+	});
 }
 
-function removeAnnotation(annotation) {
+function changeAnnotationTime(annotation, newTimestamp) {
 	var displayID = annotation.attr("id");
+<<<<<<< HEAD
 	var actualAnn;
 	for (i = 0; i < annotations.length; i++){
 		if (displayID == annotations[i].displayID){
@@ -104,15 +128,36 @@ function removeAnnotation(annotation) {
 		annotation.slideUp(400, function () {
 			$(this).remove();
 		});
+=======
+	var oldAnnotation = annotations[findAnnotation(displayID)];
+	var newAnnotation = {};
+	newAnnotation.text = oldAnnotation.text;
+	newAnnotation.timestamp = newTimestamp;
+	removeAnnotation(annotation);
+	displayAnnotation(newAnnotation);
+}
+>>>>>>> master
 
-		var indexToRemove = -1;
-		annotations.some(function (e, i, a) {
+function findAnnotation(displayID) {
+	var index = -1;
+	annotations.some(function (e, i, a) {
 			if(e.displayID == displayID) {
-				indexToRemove = i;
+				index = i;
 				return true;
 			}
 			return false;
 		});
+	return index;
+}
+
+function removeAnnotation(annotation) {
+	var displayID = annotation.attr("id");
+		annotation.slideUp(400, function () {
+			$(this).remove();
+		});
+
+		var indexToRemove = findAnnotation(displayID);
+		var annotationToRemove = annotations[indexToRemove];
 		if(indexToRemove != -1)
 			annotations.splice(indexToRemove, 1);
 	var annMotifs = actualAnn.motifs;
@@ -122,6 +167,7 @@ function removeAnnotation(annotation) {
 			motifs[i].ann.splice(annLocation,1);
 		}
 	}
+	removeTick(annotationToRemove);
 }
 
 // Displays all the annotations that are already present
@@ -130,9 +176,6 @@ function displayAllAnnotations(annotations) {
 		displayAnnotation(e);
 	});
 }
-
-// Global variable which stores the id of the annotation which is currently "on", if any
-onAnn = null;
 
 // Given a time in seconds, highlights that annotation to be yellow 
 function highlight(time){
@@ -152,12 +195,14 @@ $(document).ready(function () {
 	table = $('#annotation-table');
 	annotationList = $('#annotation-list');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
+	canvas = document.getElementById("timeline-canvas")
 
 	ann = [ { timestamp: 1, text: "First annotation"},
 							{ timestamp: 4, text: "Second annotation"},
 							{ timestamp: 12, text: "Opportunity for ramp-up"},
 							{ timestamp: 30, text: "Bass drop"}]
 
+	setupPaper();
 	displayAllAnnotations(ann);
 	addInitialMotifs();
 });

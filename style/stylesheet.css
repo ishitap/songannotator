@@ -79,3 +79,18 @@ a{
 	color: #23527c;
 	font-weight: bold;
 }
+
+.annotation-time {
+	border-right: 1px solid lightgray;
+}
+
+.annotation-time-input {
+	max-width: 40px;
+	outline: none;
+	display: none;
+}
+
+#timeline-canvas {
+	width: 400px;
+	height: 100px;
+}

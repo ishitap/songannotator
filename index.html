@@ -7,36 +7,35 @@
 	<link rel="stylesheet" type="text/css" href="style/stylesheet.css">
 </head>
 <body>
-	<div>
-		<div>
-			<h3>Song</h3>
-			<audio src="feelsoclose.mp3" controls="controls">
-				Your browser does not support the audio element. <!-- Error shows if not supported -->
-			</audio>
-			<p id="time">Time: 0</p>
-		</div>
+<div class="container">
+		<div class="col-md-5">
+			<div>
+				<h3>Song</h3>
+				<audio src="feelsoclose.mp3" controls="controls">
+					Your browser does not support the audio element. <!-- Error shows if not supported -->
+				</audio>
+				<p id="time">Time: 0</p>
+			</div>
 
-		<form id="annForm">
-			Annotation: <input type="text" name="text"></input>
-			<input type="submit" value="Add"></input>
-		</form>
-		<p>Type "#" before a motif to tag an annotation!</p>
-	<!-- 	<form id="filterForm">
-			Filter by Motif: <input type="text" name="filterText"></input>
-			<input type="submit" value="Filter"></input>
-			<a href='#' id="cFilter" style="display:none;" onclick="clearFilter()"><img style='height:20px;' src='images/delete.png'></img></a>
-		</form>
- -->
-		<div class = "col-md-4" id="annotation-display">
-			<h2>Annotations</h2>
-			<p><b id="filterText">No Annotations Match this Tag</b><p>
-			<div id="annotation-list">
+			<div id="timeline">
+				<canvas id="timeline-canvas" width="400" height="100">
+				</canvas>
+			</div>
+
+			<form id="annForm">
+				Annotation: <input type="text" name="text"></input>
+				<input type="submit" value="Add"></input>
+			</form>
+			<p>Type "#" before a motif to tag an annotation!</p>
+			<div class = "col-md-4" id="annotation-display">
+				<h2>Annotations</h2>
+				<p><b id="filterText">No Annotations Match this Tag</b><p>
+				<div id="annotation-list">="annotation-list">
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="col-md-2"></div>
-
+		<div class="col-md-1"></div>
 
 	<div class="col-md-6 motDiv">
 <!-- 		<form id="motForm">
@@ -51,6 +50,20 @@
 			<li id="motif-list">
 				<ul id="first-elem"></ul>
 			</li>
+=======
+		<div class="col-md-6 motDiv">
+			<form id="motForm">
+				Add Motif: <input type="text" name="motText"></input>
+				<input type="submit" value="Add"></input>
+			</form>
+			<div id="motif-display">
+				<h2>Motifs</h2>
+				<table id="motif-table">
+					<tr id="first-row">
+						<th>Motif</th>
+				</table>
+			</div>
+>>>>>>> master
 		</div>
 	</div>
 
@@ -58,7 +71,8 @@
 		<div class="panel panel-default annotation annotation-hidden" id="{{displayID}}">
 			<div class="panel-body">
 				<div class="col-md-2 annotation-time">
-					{{displayTime}}
+					<span class="annotation-time-display">{{displayTime}}</span>
+					<input type="text" class="annotation-time-input" value="{{displayTime}}"></input>
 				</div>
 				<div class="col-md-9" id="ann{{displayID}}">
 					{{text}}
@@ -71,8 +85,10 @@
 	</script>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script type="text/javascript" src="js/paper-full.min.js"></script>
 	<script type="text/javascript" src="js/motifs.js"></script>
 	<script type="text/javascript" src="js/handlebars-v3.0.0.js"></script>
+	<script type="text/javascript" src="js/timeline.js"></script>	
 	<script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/form.js"></script>
 </body>
