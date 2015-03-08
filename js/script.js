@@ -5,6 +5,7 @@ var annotationList;               // global referring to the annotation table
 var annotations = [];    // global data structure for annotations
 // Global variable which stores the id of the annotation which is currently "on", if any
 onAnn = null;
+var canvas;
 
 var annotationTemplate;
 
@@ -68,21 +69,16 @@ function displayAnnotation(annotation) {
 	var annotationObj;
 
 	if (prevIndex >= 0) {
-		// if this annotation isn't first
 		var prev = annotationList.find('#' + annotations[prevIndex].displayID)
 		prev.after(annotationHTML);
 	}
 	else 
-		// if this annotation is first
 		annotationList.prepend(annotationHTML);
 
-	if (index >= annotations.length)
-		annotations.push(annotation);
-	else {
-		annotations.splice(index, 0, annotation);
-	}
-
+	annotations.splice(index, 0, annotation);
 	addAnnotationInteractions($("#" + annotation.displayID));
+	annotation.tick = drawTick(annotation.timestamp);
+	console.log(annotation.tick)
 }
 
 function addAnnotationInteractions(annotation) {
@@ -148,8 +144,11 @@ function removeAnnotation(annotation) {
 		});
 
 		var indexToRemove = findAnnotation(displayID);
+		var annotationToRemove = annotations[indexToRemove];
 		if(indexToRemove != -1)
 			annotations.splice(indexToRemove, 1);
+
+		removeTick(annotationToRemove);
 }
 
 // Displays all the annotations that are already present
@@ -177,12 +176,14 @@ $(document).ready(function () {
 	table = $('#annotation-table');
 	annotationList = $('#annotation-list');
 	annotationTemplate = Handlebars.compile($("#annotation-template").html());
+	canvas = document.getElementById("timeline-canvas")
 
 	ann = [ { timestamp: 1, text: "First annotation"},
 							{ timestamp: 4, text: "Second annotation"},
 							{ timestamp: 12, text: "Opportunity for ramp-up"},
 							{ timestamp: 30, text: "Bass drop"}]
 
+	setupPaper();
 	displayAllAnnotations(ann);
 });
 

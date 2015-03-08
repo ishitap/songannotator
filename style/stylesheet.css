@@ -40,3 +40,8 @@ table, th, td {
 	outline: none;
 	display: none;
 }
+
+#timeline-canvas {
+	width: 400px;
+	height: 100px;
+}
