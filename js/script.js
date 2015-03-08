@@ -139,6 +139,13 @@ function findAnnotation(displayID) {
 
 function removeAnnotation(annotation) {
 	var displayID = annotation.attr("id");
+	var actualAnn;
+	for (i = 0; i < annotations.length; i++){
+		if (displayID == annotations[i].displayID){
+			actualAnn = annotations[i];
+			break;
+		}
+	}
 		annotation.slideUp(400, function () {
 			$(this).remove();
 		});
@@ -147,8 +154,14 @@ function removeAnnotation(annotation) {
 		var annotationToRemove = annotations[indexToRemove];
 		if(indexToRemove != -1)
 			annotations.splice(indexToRemove, 1);
-
-		removeTick(annotationToRemove);
+	var annMotifs = actualAnn.motifs;
+	for (i = 0; i < motifs.length; i++){
+		if (annMotifs.indexOf(motifs[i].timestamp) > -1){
+			annLocation = motifs[i].ann.indexOf(displayID);
+			motifs[i].ann.splice(annLocation,1);
+		}
+	}
+	removeTick(annotationToRemove);
 }
 
 // Displays all the annotations that are already present
@@ -185,6 +198,7 @@ $(document).ready(function () {
 
 	setupPaper();
 	displayAllAnnotations(ann);
+	addInitialMotifs();
 });
 
 // Check current time to highlight annotations

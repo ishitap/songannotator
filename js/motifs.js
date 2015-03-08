@@ -8,6 +8,7 @@ $("#motForm").submit(function() {
 	text = text.replace(/\s+/g, '');
 	var time = Date.now();
 	addMotif({mName: text, timestamp: time, ann: []}, null);
+	this.reset();
 });
 
 $("#filterForm").submit(function() {
@@ -18,21 +19,60 @@ $("#filterForm").submit(function() {
 			var anns = motifs[i]["ann"];
 			for (j = 0; j < annotations.length; j++){
 				if (anns.indexOf(annotations[j]["displayID"]) == -1){
-					console.log(annotations[j]["displayID"]);
 					$("#" + annotations[j]["displayID"]).hide();
-					$("#cFilter").show();
 				}
 			}
 		}
 	}
-	this.reset()
 });
+
+function filter(motifId){
+	clearFilter();
+	for (i = 0; i < motifs.length; i++){
+		if ($('#link' + motifs[i].timestamp).attr('class') == 'clicked' && motifs[i].timestamp != motifId){
+			$('#link' + motifs[i].timestamp).toggleClass('clicked').toggleClass('unclicked');
+		}
+	}
+	if ($('#link' + motifId).attr('class') == 'unclicked'){
+		for (i = 0; i < motifs.length; i++){
+			if (motifs[i]["timestamp"] == motifId){
+				var anns = motifs[i]["ann"];
+				console.log("ANNS", anns);
+				if (anns.length == 0){
+					clearFilter();
+					$('#link' + motifId).toggleClass('clicked').toggleClass('unclicked');
+					$('#filterText').show();
+					return;
+				}
+				for (j = 0; j < annotations.length; j++){
+					if (anns.indexOf(annotations[j]["displayID"]) == -1){
+						console.log(annotations[j]["displayID"]);
+						$("#" + annotations[j]["displayID"]).hide();
+						annotations[j].tick.visible = false;
+					}
+				}
+				view.draw();
+				var showText = "Showing " + anns.length + " of " + annotations.length + " annotations";
+				$('#filterText').text(showText);
+				$('#filterText').show();
+				break;
+			}
+		}
+	}
+	else{
+		clearFilter();
+	}	
+	$('#link' + motifId).toggleClass('clicked').toggleClass('unclicked');
+}
 
 function clearFilter(){
 	for (j = 0; j < annotations.length; j++){
 		$("#" + annotations[j]["displayID"]).show();
+		annotations[j].tick.visible = true;
 	}
-	$("#cFilter").hide();
+	view.draw();
+	$('#filterText').text("No Annotations Match this Tag");
+	$('#filterText').hide();
 }
 
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
@@ -44,7 +84,6 @@ function findMIndex(motif) {
 			break;
 		}
 	}
-	console.log(index);
 	return index;
 }
 
@@ -62,19 +101,6 @@ function addClickFunction(motifId){
 	displayAnnotation(ann);
 }
 
-//Adds motif to the annotation box
-// function addToAnnotation(motifId){
-// 	var text = "";
-// 	for (i = 0; i < motifs.length; i++){
-// 		if (motifs[i].timestamp == motifId){
-// 			text = "#" + motifs[i].mName + " ";
-// 			break;
-// 		}
-// 	}
-// 	var startVal = $('input[name="text"]').val();
-// 	$('input[name="text"]').val(startVal.concat(text));
-
-// }
 
 //Function to delete a motif
 function deleteFunction(motifId){
@@ -98,12 +124,12 @@ function deleteFunction(motifId){
 				var firstPart = val.substring(0,mVal);
 				var secondPart = val.substring(mVal+motText.length+2,val.length);
 				annotations[i]["text"] = firstPart.concat(secondPart);
-				tableId = "#td" + annotations[i]["displayID"];
-				$(tableId)[0].innerHTML = annotations[i]["text"];
+				valId = "#ann" + annotations[i]["displayID"];
+				$(valId)[0].innerHTML = annotations[i]["text"];
 			}
 		}
 	}
-	document.getElementById("motif-table").deleteRow(mot+1);
+	$("#" + motifId).remove();
 }
 
 //Adds Motif to the Table Display
@@ -135,23 +161,42 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var tableRow = "<tr id='" + motifId + "'><td><a href='#' onclick='addClickFunction("+ motifId + ")''>"+ motif.mName + "</a></td><td><a href='#' onclick='deleteFunction("+ motifId + ")''><img style='height:20px;' src='images/delete.png'></img></a></td></tr>";
+	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></ul>";
+
+	$('#' + motifId).mouseover(function(){
+		console.log("hello");
+	})
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
-	console.log(prevMIndex);
 
 	if (prevMIndex >= 0) {
-		var prev = $('#motif-table').find('#' + motifs[prevMIndex].timestamp);
-		prev.after(tableRow);
+		console.log(motif.mName, prevMIndex, motifs[prevMIndex].mName, motifs[prevMIndex].timestamp)
+		var prev = $('#motif-list').find('#' + motifs[prevMIndex].timestamp);
+		prev.after(newElem);
 	}
-	else 
-		$('#motif-table').find('#first-row').after(tableRow);
+	else{ 
+		$('#motif-list').find('#first-elem').after(newElem);
+	}
 
 	if (mIndex >= motifs.length)
 		motifs.push(motif);
 	else {
 		motifs.splice(mIndex, 0, motif);
 	}
+}
+
+function addInitialMotifs(){
+	time = Date.now();
+	motif1 = {mName:"formation-change", timestamp:time, ann:[]};
+	addMotif(motif1, null);
+	motif2 = {mName:"smooth-music", timestamp:time+1, ann:[]};
+	addMotif(motif2, null);
+	motif3 = {mName:"storyline", timestamp:time+2, ann:[]};
+	addMotif(motif3, null);
+	motif5 = {mName:"music-annotation", timestamp:time+4, ann:[]};
+	addMotif(motif5,null);
+	motif6 = {mName:"choreo-annotation", timestamp:time+5, ann:[]};
+	addMotif(motif6, null);
 }
 

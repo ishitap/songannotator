@@ -7,10 +7,34 @@ table {
 }
 
 table, th, td {
-	border-style: solid;
+	border-style: none;
 	border-width: 1px;
+	text-align: center;
+	font-size: 16px;
+}
+
+tr{
+	height: 50px;
+}
+
+td{
+}
+
+li{
+	list-style-type: none;
 	text-align: left;
-	padding: 10px;
+}
+
+ul{
+	padding: 5px;
+}
+
+#first-row{
+	height: 0px;
+}
+
+a{
+	color: black;
 }
 
 * {
@@ -18,10 +42,10 @@ table, th, td {
 	font-weight: 300;
 }
 
-.motDiv{
+/*.motDiv{
 	position: relative;
 	padding-top: 10%;
-}
+}*/
 
 .annotation-control {
 	display: none;	
@@ -29,6 +53,31 @@ table, th, td {
 
 .annotation-hidden {
 	display: none;
+}
+
+#filterText{
+	display: none;
+}
+
+
+.unclicked:focus{
+	color: black;
+	font-weight: normal;
+}
+
+.clicked:focus{
+	color: #23527c;
+	font-weight: bold;
+}
+
+.unclicked{
+	color: black;
+	font-weight: normal;
+}
+
+.clicked{
+	color: #23527c;
+	font-weight: bold;
 }
 
 .annotation-time {
