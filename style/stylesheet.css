@@ -60,9 +60,14 @@ a{
 }
 
 
-a:focus{
+.unclicked:focus{
 	color: black;
 	font-weight: normal;
+}
+
+.clicked:focus{
+	color: #23527c;
+	font-weight: bold;
 }
 
 .unclicked{

@@ -27,6 +27,12 @@ $("#filterForm").submit(function() {
 });
 
 function filter(motifId){
+	clearFilter();
+	for (i = 0; i < motifs.length; i++){
+		if ($('#link' + motifs[i].timestamp).attr('class') == 'clicked' && motifs[i].timestamp != motifId){
+			$('#link' + motifs[i].timestamp).toggleClass('clicked').toggleClass('unclicked');
+		}
+	}
 	if ($('#link' + motifId).attr('class') == 'unclicked'){
 		for (i = 0; i < motifs.length; i++){
 			if (motifs[i]["timestamp"] == motifId){
@@ -34,7 +40,7 @@ function filter(motifId){
 				console.log("ANNS", anns);
 				if (anns.length == 0){
 					clearFilter();
-					$('#link' + motifId).toggleClass('clicked');
+					$('#link' + motifId).toggleClass('clicked').toggleClass('unclicked');
 					$('#filterText').show();
 					return;
 				}
@@ -47,13 +53,14 @@ function filter(motifId){
 				var showText = "Showing " + anns.length + " of " + annotations.length + " annotations";
 				$('#filterText').text(showText);
 				$('#filterText').show();
+				break;
 			}
 		}
 	}
 	else{
 		clearFilter();
 	}	
-	$('#link' + motifId).toggleClass('clicked');
+	$('#link' + motifId).toggleClass('clicked').toggleClass('unclicked');
 }
 
 function clearFilter(){
@@ -113,12 +120,12 @@ function deleteFunction(motifId){
 				var firstPart = val.substring(0,mVal);
 				var secondPart = val.substring(mVal+motText.length+2,val.length);
 				annotations[i]["text"] = firstPart.concat(secondPart);
-				tableId = "#td" + annotations[i]["displayID"];
-				$(tableId)[0].innerHTML = annotations[i]["text"];
+				valId = "#ann" + annotations[i]["displayID"];
+				$(valId)[0].innerHTML = annotations[i]["text"];
 			}
 		}
 	}
-	document.getElementById("motif-table").deleteRow(mot+1);
+	$("#" + motifId).remove();
 }
 
 //Adds Motif to the Table Display
@@ -150,7 +157,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-annotation' aria-hidden='true' style='display:none;'></span></ul>";
+	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></ul>";
 
 	$('#' + motifId).mouseover(function(){
 		console.log("hello");
