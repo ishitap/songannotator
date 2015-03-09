@@ -42,36 +42,42 @@
 		</div>
 	</div>
 
-	<div class="container spacer">
-	</div>
+	<!-- end fixed bit, start scrolly bit -->
 
-	<div class="container">
-		<div class="col-md-2"></div>
+	<div class="scroll-content">
 
-		<div class="col-md-6">
-			
-			<p>Type "#" before a motif to tag an annotation!</p>
-			<div id="annotation-display">
-				<h2>Annotations</h2>
-				<p><b id="filterText">No Annotations Match this Tag</b><p>
-				<div id="annotation-list">
+		<div class="container spacer">
+		</div>
+
+		<div class="container">
+			<div class="col-md-2"></div>
+
+			<div class="col-md-6">
+				
+				<p>Type "#" before a motif to tag an annotation!</p>
+				<div id="annotation-display">
+					<h2>Annotations</h2>
+					<p><b id="filterText">No Annotations Match this Tag</b><p>
+					<div id="annotation-list">
+					</div>
 				</div>
+			</div>
+
+			<div class="col-md-1"></div>
+
+
+		<div class="col-md-2 motDiv">
+			<div id="motif-display">
+				<h2>Motifs</h2>
+				<table id="motif-table">
+					<tr id="first-row">
+				</table>
+				<li id="motif-list">
+					<ul id="first-elem"></ul>
+				</li>
 			</div>
 		</div>
 
-		<div class="col-md-1"></div>
-
-
-	<div class="col-md-2 motDiv">
-		<div id="motif-display">
-			<h2>Motifs</h2>
-			<table id="motif-table">
-				<tr id="first-row">
-			</table>
-			<li id="motif-list">
-				<ul id="first-elem"></ul>
-			</li>
-		</div>
 	</div>
 
 	<script id="annotation-template" type="text/x-handlebars-template">
