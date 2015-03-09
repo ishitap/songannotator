@@ -13,7 +13,18 @@
 		</div>
 
 		<div class="music-visual">
-		</div>
+
+			<!-- take out content from here & put in waveform -->
+			<div class="container">
+				<h3>Song</h3>
+				<audio src="feelsoclose.mp3" controls="controls">
+					Your browser does not support the audio element. <!-- Error shows if not supported -->
+				</audio>
+				<p id="time">Time: 0</p>
+			</div>
+			<!-- take out content from here & put in waveform -->
+
+		</div> <!-- end music visual -->
 
 		<div class="timeline" id="timeline">
 			<canvas id="timeline-canvas" height="30">
@@ -25,14 +36,9 @@
 	</div>
 
 	<div class="container">
-		<div class="col-md-5">
-			<div>
-				<h3>Song</h3>
-				<audio src="feelsoclose.mp3" controls="controls">
-					Your browser does not support the audio element. <!-- Error shows if not supported -->
-				</audio>
-				<p id="time">Time: 0</p>
-			</div>
+		<div class="col-md-2"></div>
+
+		<div class="col-md-6">
 
 
 			<form id="annForm">
@@ -51,7 +57,7 @@
 		<div class="col-md-1"></div>
 
 
-	<div class="col-md-6 motDiv">
+	<div class="col-md-2 motDiv">
 		<div id="motif-display">
 			<h2>Motifs</h2>
 			<table id="motif-table">
