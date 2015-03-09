@@ -78,7 +78,6 @@ function displayAnnotation(annotation) {
 	annotations.splice(index, 0, annotation);
 	addAnnotationInteractions($("#" + annotation.displayID));
 	annotation.tick = drawTick(annotation.timestamp);
-	console.log(annotation.tick)
 }
 
 function addAnnotationInteractions(annotation) {
@@ -128,7 +127,7 @@ function changeAnnotationTime(annotation, newTimestamp) {
 function findAnnotation(displayID) {
 	var index = -1;
 	annotations.some(function (e, i, a) {
-			if(e.displayID == displayID) {
+			if(Number(e.displayID) == Number(displayID)) {
 				index = i;
 				return true;
 			}
@@ -152,15 +151,31 @@ function removeAnnotation(annotation) {
 
 		var indexToRemove = findAnnotation(displayID);
 		var annotationToRemove = annotations[indexToRemove];
-		if(indexToRemove != -1)
-			annotations.splice(indexToRemove, 1);
-	var annMotifs = actualAnn.motifs;
-	for (i = 0; i < motifs.length; i++){
-		if (annMotifs.indexOf(motifs[i].timestamp) > -1){
-			annLocation = motifs[i].ann.indexOf(displayID);
-			motifs[i].ann.splice(annLocation,1);
+		var annotationMotifs = annotationToRemove.motifs;
+		if (annotationMotifs) {
+			for (i = 0; i < motifs.length; i++) {
+				if (annotationMotifs.indexOf(motifs[i].timestamp) > -1) {
+					annLocation = motifs[i].ann.indexOf(displayID);
+					motifs[i].ann.splice(annLocation, 1);
+				}
+			}
 		}
-	}
+
+		annotations.splice(indexToRemove, 1);
+
+
+	// 	if(indexToRemove != -1)
+	// 		annotations.splice(indexToRemove, 1);
+
+
+
+	// var annMotifs = actualAnn.motifs;
+	// for (i = 0; i < motifs.length; i++){
+	// 	if (annMotifs.indexOf(motifs[i].timestamp) > -1){
+	// 		annLocation = motifs[i].ann.indexOf(displayID);
+	// 		motifs[i].ann.splice(annLocation,1);
+	// 	}
+	// }
 	removeTick(annotationToRemove);
 }
 
@@ -181,6 +196,7 @@ function highlight(time){
 	for (i = 0; i < annotations.length; i++) {
 		if (annotations[i].timestamp == time) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
+			// scroll to appropriate annotation...
 			highlightTick(annotations[i]);
 			onAnn.push(annotations[i]);
 		}

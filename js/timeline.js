@@ -38,7 +38,6 @@ function drawTick(seconds) {
 
 function removeTick(annotation) {
 	var tick = annotation.tick;
-	console.log(tick)
 	if(tick)
 		tick.remove();
 	view.draw();
