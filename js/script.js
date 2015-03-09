@@ -178,11 +178,19 @@ function highlight(time){
 	for (i = 0; i < annotations.length; i++) {
 		if (annotations[i].timestamp == time) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
-			// scroll to appropriate annotation...
+			scrollToAnnotation(annotations[i]);
 			highlightTick(annotations[i]);
 			onAnn.push(annotations[i]);
 		}
 	}
+}
+
+function scrollToAnnotation(annotation) {
+	// var annotationView = $('#' + annotation.displayID);
+	// var scrollPos = annotationView.offset().top - 50;
+	// $('html, body').animate({
+	// 	scrollTop: scrollPos
+	// }, 400);
 }
 
 // Function that runs with pre-populated annotations when the page is first loaded 
