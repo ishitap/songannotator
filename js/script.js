@@ -185,19 +185,6 @@ function highlight(time){
 			onAnn.push(annotations[i]);
 		}
 	}
-
-
-	// if (onAnn && $('#' + onAnn.displayID)) {
-	// 	$('#' + onAnn.displayID).removeClass("highlighted");
-	// 	unhighlightTick(onAnn);
-	// }
-	// for (i = 0; i < annotations.length; i++) {
-	// 	if (annotations[i].timestamp == time) {
-	// 		$('#' + annotations[i].displayID).addClass("highlighted");
-	// 		highlightTick(annotations[i]);
-	// 		onAnn = annotations[i];
-	// 	}
-	// }
 }
 
 // Function that runs with pre-populated annotations when the page is first loaded 
