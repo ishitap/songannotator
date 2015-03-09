@@ -98,6 +98,7 @@ a{
 	left: 0;
 	z-index: 999;
 	background-color: white;
+	border-bottom: 1px solid #ddd;
 }
 
 .navigation {
@@ -116,6 +117,15 @@ a{
 }
 
 .spacer {
-	height: 230px;
+	height: 271px;
+}
+
+#annForm input[type="text"] {
+	outline: none;
+	border: none;
+	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	height: 40px;
+	width: 100%;
 }
 

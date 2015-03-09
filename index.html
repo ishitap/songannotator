@@ -30,6 +30,16 @@
 			<canvas id="timeline-canvas" height="30">
 			</canvas>
 		</div>
+
+		<div id="add-annotation-form" class="container">
+			<div class="col-md-2"></div>
+			<form id="annForm">
+				<div class="col-md-6">
+					<input type="text" placeholder="Add an annotation..." name="text"></input>
+				</div>
+				<input type="submit" value="Add"></input>
+			</form>
+		</div>
 	</div>
 
 	<div class="container spacer">
@@ -39,10 +49,7 @@
 		<div class="col-md-2"></div>
 
 		<div class="col-md-6">
-			<form id="annForm">
-				Annotation: <input type="text" name="text"></input>
-				<input type="submit" value="Add"></input>
-			</form>
+			
 			<p>Type "#" before a motif to tag an annotation!</p>
 			<div id="annotation-display">
 				<h2>Annotations</h2>
