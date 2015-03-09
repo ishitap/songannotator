@@ -1,17 +1,21 @@
 paper.install(window);
 
 var tickHeight = 10;
-var totalLength = 400;
+var totalLength = 807;
 var yPos = 50;
 
 //------
 
 function setupPaper() {
-	canvas = document.getElementById('timeline-canvas');
-	totalLength = canvas.width;
-	yPos = canvas.height/2;
+	canvas = $("#timeline-canvas")
+	canvas.attr("width", $(window).width());
+	totalLength = canvas.width();
+	yPos = canvas.height()/2;
 
-	paper.setup(canvas);
+	console.log(totalLength)
+	console.log(yPos)
+
+	paper.setup("timeline-canvas");
 
 	paperscope = paper;
 	

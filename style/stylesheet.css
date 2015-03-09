@@ -90,11 +90,36 @@ a{
 	display: none;
 }
 
-#timeline-canvas {
-	width: 400px;
-	height: 100px;
-}
-
 .highlighted {
 	background-color: #d6e9c6;
 }
+
+/* non core styling */
+
+.fixed-top {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background-color: white;
+}
+
+.navigation {
+	height: 50px;
+	border-bottom: 1px solid #ddd;
+}
+
+.music-visual {
+	height: 150px;
+	background-color: #f6f6f6;
+}
+
+.timeline {
+	height: 30px;
+	border-bottom: 1px solid #ddd;
+}
+
+.spacer {
+	height: 230px;
+}
+
