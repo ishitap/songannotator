@@ -97,7 +97,7 @@ function addAnnotationInteractions(annotation) {
 	annotation.find(".annotation-time-display").click(function () {
 		$(this).hide();
 		var annotationTimeInput = $(this).next();
-		annotationTimeInput.show();
+		annotationTimeInput.show().focus();
 	});
 
 	annotation.find(".annotation-time-input").on("blur keypress", function (e) {
@@ -106,6 +106,10 @@ function addAnnotationInteractions(annotation) {
 		}
 		if (e.type == "blur" || e.which == 13) {
 			$(this).hide();
+			if ($(this).val() == $(this).prev().html()) {
+				$(this).prev().show();
+				return;
+			}
 			$(this).prev().html($(this).val());
 			$(this).prev().show();
 			var annotation = $(this).closest(".annotation");
