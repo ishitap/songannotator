@@ -22,19 +22,6 @@
       </div>
     </div>
 
-    <div class="music-visual">
-
-      <!-- take out content from here & put in waveform -->
-      <div class="container">
-        <h3>Song</h3>
-        <audio src="media/feelsoclose.mp3" controls="controls">
-          Your browser does not support the audio element. <!-- Error shows if not supported -->
-        </audio>
-      </div>
-      <!-- take out content from here & put in waveform -->
-
-    </div> <!-- end music visual -->
-
     <div class="timeline" id="timeline">
       <canvas id="timeline-canvas" height="30">
       </canvas>
@@ -43,12 +30,12 @@
     <div class="controls">
       <p id="time">Time: 0</p>
 
-      <button class="btn-group" data-action="back">
+      <button class="btn" data-action="back">
         <i class="glyphicon glyphicon-step-backward"></i>
         Backward
       </button>
 
-      <button class="btn-group" data-action="play">
+      <button class="btn" data-action="play">
         <i class="glyphicon glyphicon-play"></i>
         Play
         /
@@ -56,12 +43,12 @@
         Pause
       </button>
 
-        <button class="btn-group" data-action="forth">
+        <button class="btn" data-action="forth">
           <i class="glyphicon glyphicon-step-forward"></i>
           Forward
         </button>
 
-        <button class="btn-group" data-action="toggle-mute">
+        <button class="btn" data-action="toggle-mute">
           <i class="glyphicon glyphicon-volume-off"></i>
           Toggle Mute
         </button>
