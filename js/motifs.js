@@ -171,7 +171,7 @@ function addMotif(motif, annotation) {
 	var prevMIndex = mIndex - 1;
 
 	if (prevMIndex >= 0) {
-		console.log(motif.mName, prevMIndex, motifs[prevMIndex].mName, motifs[prevMIndex].timestamp)
+		// console.log(motif.mName, prevMIndex, motifs[prevMIndex].mName, motifs[prevMIndex].timestamp)
 		var prev = $('#motif-list').find('#' + motifs[prevMIndex].timestamp);
 		prev.after(newElem);
 	}

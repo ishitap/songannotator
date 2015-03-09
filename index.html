@@ -1,109 +1,145 @@
 <!DOCTYPE html>
 <head>
-	<title>Song Annotator</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" type="text/css" href="style/stylesheet.css">
+  <title>Song Annotator</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="style/stylesheet.css">
+
+  <script type="text/javascript" src="js/wavesurfer.min.js"></script>
+  <script type="text/javascript" src="js/waveform.js"></script>
+  <script type="text/javascript" src="js/controls.js"></script>
 </head>
 <body>
 
-	<div class="fixed-top">
-		<div class="navigation">
-			<span>StepNote</span>
-		</div>
+  <div class="fixed-top">
+    <div class="navigation">
+      <span>StepNote</span>
+    </div>
 
-		<div class="music-visual">
+    <div id="waveform">
+      <div class="progress progress-striped active" id="progress-bar">
+        <div class="progress-bar progress-bar-info"></div>
+      </div>
+    </div>
 
-			<!-- take out content from here & put in waveform -->
-			<div class="container">
-				<h3>Song</h3>
-				<audio src="feelsoclose.mp3" controls="controls">
-					Your browser does not support the audio element. <!-- Error shows if not supported -->
-				</audio>
-				<p id="time">Time: 0</p>
-			</div>
-			<!-- take out content from here & put in waveform -->
+    <div class="music-visual">
 
-		</div> <!-- end music visual -->
+      <!-- take out content from here & put in waveform -->
+      <div class="container">
+        <h3>Song</h3>
+        <audio src="media/feelsoclose.mp3" controls="controls">
+          Your browser does not support the audio element. <!-- Error shows if not supported -->
+        </audio>
+      </div>
+      <!-- take out content from here & put in waveform -->
 
-		<div class="timeline" id="timeline">
-			<canvas id="timeline-canvas" height="30">
-			</canvas>
-		</div>
+    </div> <!-- end music visual -->
 
-		<div id="add-annotation-form" class="container">
-			<div class="col-md-2"></div>
-			<form id="annForm">
-				<div class="col-md-6">
-					<input type="text" placeholder="Add an annotation..." name="text"></input>
-				</div>
-				<input type="submit" value="Add"></input>
-			</form>
-		</div>
-	</div>
+    <div class="timeline" id="timeline">
+      <canvas id="timeline-canvas" height="30">
+      </canvas>
+    </div>
 
-	<!-- end fixed bit, start scrolly bit -->
+    <div class="controls">
+      <p id="time">Time: 0</p>
 
-	<div class="scroll-content">
+      <button class="btn-group" data-action="back">
+        <i class="glyphicon glyphicon-step-backward"></i>
+        Backward
+      </button>
 
-		<div class="container spacer">
-		</div>
+      <button class="btn-group" data-action="play">
+        <i class="glyphicon glyphicon-play"></i>
+        Play
+        /
+        <i class="glyphicon glyphicon-pause"></i>
+        Pause
+      </button>
 
-		<div class="container">
-			<div class="col-md-2"></div>
+        <button class="btn-group" data-action="forth">
+          <i class="glyphicon glyphicon-step-forward"></i>
+          Forward
+        </button>
 
-			<div class="col-md-6">
-				
-				<p>Type "#" before a motif to tag an annotation!</p>
-				<div id="annotation-display">
-					<h2>Annotations</h2>
-					<p><b id="filterText">No Annotations Match this Tag</b><p>
-					<div id="annotation-list">
-					</div>
-				</div>
-			</div>
+        <button class="btn-group" data-action="toggle-mute">
+          <i class="glyphicon glyphicon-volume-off"></i>
+          Toggle Mute
+        </button>
+    </div>
 
-			<div class="col-md-1"></div>
+    <div id="add-annotation-form" class="container">
+      <div class="col-md-2"></div>
+      <form id="annForm">
+        <div class="col-md-6">
+          <input type="text" placeholder="Add an annotation..." name="text"></input>
+        </div>
+        <input type="submit" value="Add"></input>
+      </form>
+    </div>
+  </div>
+
+  <!-- end fixed bit, start scrolly bit -->
+
+  <div class="scroll-content">
+
+    <div class="container spacer">
+    </div>
+
+    <div class="container">
+      <div class="col-md-2"></div>
+
+      <div class="col-md-6">
+        
+        <p>Type "#" before a motif to tag an annotation!</p>
+        <div id="annotation-display">
+          <h2>Annotations</h2>
+          <p><b id="filterText">No Annotations Match this Tag</b><p>
+          <div id="annotation-list">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-1"></div>
 
 
-		<div class="col-md-2 motDiv">
-			<div id="motif-display">
-				<h2>Motifs</h2>
-				<table id="motif-table">
-					<tr id="first-row">
-				</table>
-				<li id="motif-list">
-					<ul id="first-elem"></ul>
-				</li>
-			</div>
-		</div>
+    <div class="col-md-2 motDiv">
+      <div id="motif-display">
+        <h2>Motifs</h2>
+        <table id="motif-table">
+          <tr id="first-row">
+        </table>
+        <li id="motif-list">
+          <ul id="first-elem"></ul>
+        </li>
+      </div>
+    </div>
 
-	</div>
+  </div>
 
-	<script id="annotation-template" type="text/x-handlebars-template">
-		<div class="panel panel-default annotation annotation-hidden" id="{{displayID}}">
-			<div class="panel-body">
-				<div class="col-md-2 annotation-time">
-					<span class="annotation-time-display">{{displayTime}}</span>
-					<input type="text" class="annotation-time-input" value="{{displayTime}}"></input>
-				</div>
-				<div class="col-md-9" id="ann{{displayID}}">
-					{{text}}
-				</div>
-				<div class="col-md-1 annotation-control">
-				<span class="glyphicon glyphicon-remove remove-annotation" aria-hidden="true"></span>
-				</div>
-			</div>
-		</div>
-	</script>
+  <script id="annotation-template" type="text/x-handlebars-template">
+    <div class="panel panel-default annotation annotation-hidden" id="{{displayID}}">
+      <div class="panel-body">
+        <div class="col-md-2 annotation-time">
+          <span class="annotation-time-display">{{displayTime}}</span>
+          <input type="text" class="annotation-time-input" value="{{displayTime}}"></input>
+        </div>
+        <div class="col-md-9" id="ann{{displayID}}">
+          {{text}}
+        </div>
+        <div class="col-md-1 annotation-control">
+        <span class="glyphicon glyphicon-remove remove-annotation" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </script>
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/paper-full.min.js"></script>
-	<script type="text/javascript" src="js/motifs.js"></script>
-	<script type="text/javascript" src="js/handlebars-v3.0.0.js"></script>
-	<script type="text/javascript" src="js/timeline.js"></script>	
-	<script type="text/javascript" src="js/script.js"></script>
-	<script type="text/javascript" src="js/form.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/paper-full.min.js"></script>
+  <script type="text/javascript" src="js/motifs.js"></script>
+  <script type="text/javascript" src="js/handlebars-v3.0.0.js"></script>
+  <script type="text/javascript" src="js/timeline.js"></script> 
+  <script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript" src="js/form.js"></script>
 </body>
 </html>

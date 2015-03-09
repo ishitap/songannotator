@@ -11,10 +11,7 @@ function setupPaper() {
 	canvas.attr("width", $(window).width());
 	totalLength = canvas.width();
 	yPos = canvas.height()/2;
-
-	console.log(totalLength)
-	console.log(yPos)
-
+	
 	paper.setup("timeline-canvas");
 
 	paperscope = paper;
