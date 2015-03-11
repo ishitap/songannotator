@@ -1,6 +1,15 @@
 var GLOBAL_ACTIONS = {
     'play': function () {
         wavesurfer.playPause();
+        // Change icon
+        var $playPause = $("#play-pause");
+        if ($playPause.hasClass("glyphicon-play")) {
+            $playPause.removeClass("glyphicon-play");
+            $playPause.addClass("glyphicon-pause");
+        } else if ($playPause.hasClass("glyphicon-pause")) {
+            $playPause.removeClass("glyphicon-pause");
+            $playPause.addClass("glyphicon-play");
+        }
     },
 
     'back': function () {
