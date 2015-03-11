@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Enable rendering and disable zooming on mobile -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Stepnote</title>
+  
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- navbar -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+      <a class="navbar-brand">
+        <span id="brand">STEP</span><span id="brand-bold">NOTE</span>
+      </a>
+      <ul class="nav navbar-nav">
+        <li>
+          <a>
+            Time: 0:00
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- waveform and controls -->
+  <div class="container-fluid">
+    <div id="waveform">
+      <div class="progress progress-striped active" id="progress-bar">
+        <div class="progress-bar progress-bar-info"></div>
+      </div>
+    </div>
+    <!--<div class="row" id="timeline"></div>-->
+    <div class="row" id="controls">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" data-action="back">
+            <span class="glyphicon glyphicon-step-backward"></span>
+          </button>
+          <button type="button" class="btn btn-default" data-action="play">
+            <span class="glyphicon glyphicon-pause"></span>
+          </button>
+          <button type="button" class="btn btn-default" data-action="forth">
+            <span class="glyphicon glyphicon-step-forward"></span>
+          </button>
+          <button type="button" class="btn btn-default" data-action="toggle-mute">
+            <span class="glyphicon glyphicon-volume-off"></span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+
+  <!-- annotations -->
+  <div class="container" id="content">
+
+  </div>
+
+  <!-- wavesurfer.js -->
+  <script type="text/javascript" src="wavesurfer.min.js"></script>
+
+  <script type="text/javascript" src="waveform.js"></script>
+  <script type="text/javascript" src="controls.js"></script>
+</body>
+</html>
