@@ -174,15 +174,19 @@ body {
 	display: none;
 }
 
-#annotation-form input[type="text"] {
+#new-annotation-form input[type="text"] {
 	outline: none;
 	border: none;
-	border-right: 1px solid #ddd;
-	border-left: 1px solid #ddd;
+/*	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;*/
 	height: 40px;
 	width: 100%;
 }
 
 #new-annotation-form {
-	width: 550px; /* hard-coded */
+	width: 400px; /* hard-coded */
+}
+
+#annForm{
+	display: none;
 }
