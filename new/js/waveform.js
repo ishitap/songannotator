@@ -133,7 +133,7 @@ wavesurfer.on('ready', function () {
               { timestamp: 12, text: "Opportunity for ramp-up"},
               { timestamp: 30, text: "Bass drop"}]
 
-  setupPaper();
+  setupTicksCanvas(wavesurfer.getDuration());
   displayAllAnnotations(ann);
   addInitialMotifs();
 });
