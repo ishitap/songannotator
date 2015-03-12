@@ -23,7 +23,7 @@ function drawTick(seconds) {
 	var position = seconds/totalTime * view.size.width;
 	var tick = drawTickAt(position);
 	tick.onClick = function() {
-		// /moveToSong(seconds);
+		jumpTo(seconds);
 	};
 	return tick;
 
