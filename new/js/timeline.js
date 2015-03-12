@@ -13,7 +13,7 @@ function setupTicksCanvas(seconds) {
 function drawTickAt(position) {
 	var segments = [new Point(position-8, 16), new Point(position, 0), new Point(position+8, 16)]
 	var path = new Path(segments);
-	path.fillColor = "#96CA2D";
+	path.fillColor = "#D6E6A8";
 	view.draw();
 
 	return path;
@@ -25,11 +25,11 @@ function drawTick(seconds) {
 }
 
 function highlightTick(tick) {
-	tick.fillColor = "blue";
+	tick.fillColor = "#6DCA2D";
 	view.draw();
 }
 
 function unhighlightTick(tick) {
-	tick.fillColor = "#96CA2D";
+	tick.fillColor = "#D6E6A8";
 	view.draw();
 }
