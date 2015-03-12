@@ -74,7 +74,9 @@ body {
 }
 
 .highlighted {
-	background-color: #d6e9c6;
+	-moz-box-shadow: 0 0 4px 1px #6DCA2D;
+	-webkit-box-shadow: 0 0 4px 1px #6DCA2D;
+	box-shadow: 0 0 4px 1px #6DCA2D;
 }
 
 .unclicked:focus{
@@ -190,4 +192,9 @@ body {
 
 #annForm{
 	display: none;
+}
+
+#controls button.submit-button {
+	background-color: #4BB5C1;
+	color: white;
 }
