@@ -197,4 +197,9 @@ body {
 #controls button.submit-button {
 	background-color: #4BB5C1;
 	color: white;
+	border: none;
+}
+
+#controls button.submit-button:hover {
+	background-color: #4499A3;
 }
