@@ -205,6 +205,11 @@ function keepTime(){
 	prevFormVal = curFormVal;
 }
 
+function clickAnn(displayID){
+	ann = annotations[findAnnotation(displayID)];
+	jumpTo(ann.timestamp);
+}
+
 $("#annForm").submit(function() {
 	event.preventDefault();
 	var timestamp = recordTime;

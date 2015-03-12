@@ -144,5 +144,5 @@ wavesurfer.on('ready', function () {
 
 
 function jumpTo(numSecond){
-  wavesurfer.play(numSecond);
+  wavesurfer.seekTo((numSecond*1.0)/wavesurfer.getDuration());
 }
