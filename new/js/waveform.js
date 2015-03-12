@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Init
   wavesurfer.init(options);
   // Load audio from URL
-  wavesurfer.load('feelsoclose.mp3');
+  wavesurfer.load('peeloon.mp3');
 });
 
 // Report errors

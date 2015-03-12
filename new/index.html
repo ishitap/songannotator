@@ -24,7 +24,7 @@
     <div class="navbar-inner">
       <ul class="nav navbar-nav">
         <li>
-          <p class="navbar-text">Feel So Close</p>
+          <p class="navbar-text">Pee Loon</p>
         </li>
         <li>
           <p class="navbar-text" id="time">
@@ -66,11 +66,12 @@
             <span class="glyphicon glyphicon-volume-up" id="volume"></span>
           </button>
         </div>
-        <div id="new-annotation-form" contenteditable>
-          New annotation
-        </div>
+        <form id="annForm"></form>
+        <div id="new-annotation-form">
+            <input form="annForm" type="text" placeholder="Add an annotation..." name="text"></input>
+        </div>     
         <div class="btn-group" role="group">
-          <button type="submit" class="btn btn-default">
+          <button form="annForm" type="submit" class="btn btn-default">
             <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
@@ -85,15 +86,6 @@
       <div class="col-md-2"></div>
       <div class="col-md-6">
         <div id="annotation-display">
-          <div id="annotation-form" class="container">
-            <div class="col-md-2"></div>
-            <form id="annForm">
-              <div class="col-md-6">
-                <input type="text" placeholder="Add an annotation..." name="text"></input>
-              </div>
-              <input type="submit" value="Add"></input>
-            </form>
-          </div>
           <p id="filter-text">No annotations match</p>
           <div id="annotation-list">
           </div>
