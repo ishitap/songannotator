@@ -1,54 +1,35 @@
 paper.install(window);
+var triangle;
+var totalTime = 0;
 
-var tickHeight = 10;
-var totalLength = 807;
-var yPos = 50;
-
-//------
-
-function setupPaper() {
-	canvas = $("#timeline-canvas")
-	canvas.attr("width", $(window).width());
-	totalLength = canvas.width();
-	yPos = canvas.height()/2;
-
-	// console.log(totalLength)
-	// console.log(yPos)
-
-	paper.setup("timeline-canvas");
-
-	paperscope = paper;
-	
-	var base = new Path.Line(new Point(0, yPos), new Point(totalLength, yPos));
-	base.strokeColor = 'black';
+function setupTicksCanvas(seconds) {
+	totalTime = seconds;
+	$("#ticks-canvas").attr("width", $(window).width());
+	$("#ticks-canvas").attr("height", 20);
+	paper.setup("ticks-canvas");
 	view.draw();
+}
+
+function drawTickAt(position) {
+	var segments = [new Point(position-8, 16), new Point(position, 0), new Point(position+8, 16)]
+	var path = new Path(segments);
+	path.fillColor = "#96CA2D";
+	view.draw();
+
+	return path;
 }
 
 function drawTick(seconds) {
-  var audioDuration = wavesurfer.getDuration();
-  var x = seconds/audioDuration * totalLength;
-
-  var tick = new Path.Line(new Point(x, yPos - tickHeight/2), new Point(x, yPos + tickHeight/2));
-  tick.strokeColor = 'black';
-
-  view.draw();
-
-  return tick;
+	var position = seconds/totalTime * view.size.width;
+	return drawTickAt(position);
 }
 
-function removeTick(annotation) {
-	var tick = annotation.tick;
-	if(tick)
-		tick.remove();
+function highlightTick(tick) {
+	tick.fillColor = "blue";
 	view.draw();
 }
 
-function highlightTick(annotation) {
-	annotation.tick.strokeColor = '#d6e9c6';
-	view.draw();
-}
-
-function unhighlightTick(annotation) {
-	annotation.tick.strokeColor = 'black';
+function unhighlightTick(tick) {
+	tick.fillColor = "#96CA2D";
 	view.draw();
 }
