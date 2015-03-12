@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loaderColor: '#DDDDDD',
     waveColor: '#7FC6BC',
     progressColor: '#4BB5C1',
-    cursorColor: '#777777',
+    cursorColor: '#6DCA2D',
     height: 150,
     scrollParent: false
   };
@@ -110,6 +110,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 GLOBAL_ACTIONS[action](e);
             }
         });
+    });
+
+    $("#controls .btn-group button").mouseup(function () {
+      $(this).blur();
     });
 });
 
