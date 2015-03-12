@@ -1,68 +1,47 @@
 //motif -> {motif text, timestamp of addition, array of corresponding annotation IDs}
 var motifs = [];
 
-//Allows user to add motif to their collection of motifs
-$("#motForm").submit(function() {
-	event.preventDefault();
-	var text = $('input[name="motText"]').val();
-	text = text.replace(/\s+/g, '');
-	var time = Date.now();
-	addMotif({mName: text, timestamp: time, ann: []}, null);
-	this.reset();
-});
-
-$("#filterForm").submit(function() {
-	event.preventDefault();
-	var text = $('input[name="filterText"]').val();
-	for (i = 0; i < motifs.length; i++){
-		if (motifs[i]["mName"] == text){
-			var anns = motifs[i]["ann"];
-			for (j = 0; j < annotations.length; j++){
-				if (anns.indexOf(annotations[j]["displayID"]) == -1){
-					$("#" + annotations[j]["displayID"]).hide();
-				}
+function findMotif(motifID) {
+	var index = -1;
+	motifs.some(function (e, i, a) {
+			if(Number(e.timestamp) == Number(motifID)) {
+				index = i;
+				return true;
 			}
-		}
-	}
-});
+			return false;
+		});
+	return index;
+}
 
-function filter(motifId){
+function filterAll(motifBoxes){
 	clearFilter();
-	for (i = 0; i < motifs.length; i++){
-		if ($('#link' + motifs[i].timestamp).attr('class') == 'clicked' && motifs[i].timestamp != motifId){
-			$('#link' + motifs[i].timestamp).toggleClass('clicked').toggleClass('unclicked');
+	filterAnns = new Set();
+	for (i = 0; i < motifBoxes.length; i++){
+		idLength = motifBoxes[i].id.length;
+		motifId = motifBoxes[i].id.substring(0,idLength-9);
+		ind = findMotif(motifId);
+		anns = motifs[ind].ann;
+		for (j = 0; j < anns.length; j++){
+			filterAnns.add(anns[j]);
 		}
 	}
-	if ($('#link' + motifId).attr('class') == 'unclicked'){
-		for (i = 0; i < motifs.length; i++){
-			if (motifs[i]["timestamp"] == motifId){
-				var anns = motifs[i]["ann"];
-				console.log("ANNS", anns);
-				if (anns.length == 0){
-					clearFilter();
-					$('#link' + motifId).toggleClass('clicked').toggleClass('unclicked');
-					$('#filterText').show();
-					return;
-				}
-				for (j = 0; j < annotations.length; j++){
-					if (anns.indexOf(annotations[j]["displayID"]) == -1){
-						console.log(annotations[j]["displayID"]);
-						$("#" + annotations[j]["displayID"]).hide();
-						annotations[j].tick.visible = false;
-					}
-				}
-				view.draw();
-				var showText = "Showing " + anns.length + " of " + annotations.length + " annotations";
-				$('#filterText').text(showText);
-				$('#filterText').show();
-				break;
-			}
-		}
+	if (filterAnns.size == 0){
+		$('#filter-text').show();
 	}
 	else{
-		clearFilter();
-	}	
-	$('#link' + motifId).toggleClass('clicked').toggleClass('unclicked');
+		console.log("THERE IS SOMETHING TO ACTUALLY BE FILTERED", filterAnns);
+		for (i = 0; i < annotations.length; i++){
+			annotation = annotations[i];
+			if (!filterAnns.has(annotation.displayID)){
+				$("#"+annotation.displayID).hide();
+				annotation.tick.visible = false;
+			}
+		}
+		view.draw();
+		var showText = "Showing " + filterAnns.size + " of " + annotations.length + " annotations";
+		$('#filter-text').text(showText);
+		$('#filter-text').show();
+	}
 }
 
 function clearFilter(){
@@ -71,8 +50,8 @@ function clearFilter(){
 		annotations[j].tick.visible = true;
 	}
 	view.draw();
-	$('#filterText').text("No Annotations Match this Tag");
-	$('#filterText').hide();
+	$('#filter-text').text("No Annotations Match this Tag");
+	$('#filter-text').hide();
 }
 
 // Helper Function: Finds the right spot for the motif to be added within an alphabetically sorted array
@@ -161,7 +140,8 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' id='" + motifId + "-checkbox' name='cc' />" + "<label for='" + motifId + "-checkbox'><span class='checkbox-span'></span>" + "<a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></label></ul>";
+	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' class='motifBox' id='" + motifId + "-checkbox' name='cc' />" + "<label class='motifLabel' for='" + motifId + "-checkbox'><span class='checkbox-span'></span>#" + motif.mName + "  " + "<span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></label></ul>";
+
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
@@ -176,7 +156,6 @@ function addMotif(motif, annotation) {
 	}
 
 	$('#' + motifId).mouseover(function(){
-		console.log("hello");
 		$(this).find(".remove-motif").show();
 	});
 
@@ -189,19 +168,43 @@ function addMotif(motif, annotation) {
 	else {
 		motifs.splice(mIndex, 0, motif);
 	}
+
+	$(".motifBox").change(function(){
+		toFilter = $('input:checked');
+		if (toFilter.length > 0){
+			filterAll(toFilter);
+		}
+		else{
+			clearFilter();
+		}
+	});
 }
 
 function addInitialMotifs(){
 	time = Date.now();
-	motif1 = {mName:"formation-change", timestamp:time, ann:[]};
+	motif1 = {mName:"formation", timestamp:time, ann:[]};
 	addMotif(motif1, null);
-	motif2 = {mName:"smooth-music", timestamp:time+1, ann:[]};
+	motif2 = {mName:"inspiration", timestamp:time+1, ann:[]};
 	addMotif(motif2, null);
-	motif3 = {mName:"storyline", timestamp:time+2, ann:[]};
+	motif3 = {mName:"theme-integration", timestamp:time+2, ann:[]};
 	addMotif(motif3, null);
-	motif5 = {mName:"music-annotation", timestamp:time+4, ann:[]};
+	motif5 = {mName:"music", timestamp:time+4, ann:[]};
 	addMotif(motif5,null);
-	motif6 = {mName:"choreo-annotation", timestamp:time+5, ann:[]};
+	motif6 = {mName:"transition", timestamp:time+5, ann:[]};
 	addMotif(motif6, null);
+	motif7 = {mName:"footwork", timestamp:time+6, ann:[]};
+	addMotif(motif7, null);
+}
+
+function addMotifFiltering(){
+	$(".motifBox").change(function(){
+		toFilter = $('input:checked');
+		if (toFilter.length > 0){
+			filterAll(toFilter);
+		}
+		else{
+			clearFilter();
+		}
+	});
 }
 

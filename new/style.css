@@ -246,6 +246,10 @@ input[type="checkbox"]:checked + label .checkbox-span {
     background:url(checked.png) left top no-repeat;
 }
 
+.motifLabel{
+	font-weight: lighter;
+}
+
 #controls button.submit-button:disabled {
 	background-color: #d3d3d3;
 }
