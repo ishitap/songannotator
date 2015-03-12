@@ -1,31 +1,6 @@
 //motif -> {motif text, timestamp of addition, array of corresponding annotation IDs}
 var motifs = [];
 
-//Allows user to add motif to their collection of motifs
-$("#motForm").submit(function() {
-	event.preventDefault();
-	var text = $('input[name="motText"]').val();
-	text = text.replace(/\s+/g, '');
-	var time = Date.now();
-	addMotif({mName: text, timestamp: time, ann: []}, null);
-	this.reset();
-});
-
-$("#filterForm").submit(function() {
-	event.preventDefault();
-	var text = $('input[name="filterText"]').val();
-	for (i = 0; i < motifs.length; i++){
-		if (motifs[i]["mName"] == text){
-			var anns = motifs[i]["ann"];
-			for (j = 0; j < annotations.length; j++){
-				if (anns.indexOf(annotations[j]["displayID"]) == -1){
-					$("#" + annotations[j]["displayID"]).hide();
-				}
-			}
-		}
-	}
-});
-
 function filter(motifId){
 	clearFilter();
 	for (i = 0; i < motifs.length; i++){
@@ -161,7 +136,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' id='" + motifId + "-checkbox' name='cc' />" + "<label for='" + motifId + "-checkbox'><span class='checkbox-span'></span>" + "<a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></label></ul>";
+	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' id='" + motifId + "-checkbox' name='cc' />" + "<label for='" + motifId + "-checkbox'><span class='checkbox-span'></span>" + "<a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ "#" + motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></label></ul>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
@@ -193,15 +168,17 @@ function addMotif(motif, annotation) {
 
 function addInitialMotifs(){
 	time = Date.now();
-	motif1 = {mName:"formation-change", timestamp:time, ann:[]};
+	motif1 = {mName:"formation", timestamp:time, ann:[]};
 	addMotif(motif1, null);
-	motif2 = {mName:"smooth-music", timestamp:time+1, ann:[]};
+	motif2 = {mName:"inspiration", timestamp:time+1, ann:[]};
 	addMotif(motif2, null);
-	motif3 = {mName:"storyline", timestamp:time+2, ann:[]};
+	motif3 = {mName:"theme-integration", timestamp:time+2, ann:[]};
 	addMotif(motif3, null);
-	motif5 = {mName:"music-annotation", timestamp:time+4, ann:[]};
+	motif5 = {mName:"music", timestamp:time+4, ann:[]};
 	addMotif(motif5,null);
-	motif6 = {mName:"choreo-annotation", timestamp:time+5, ann:[]};
+	motif6 = {mName:"transition", timestamp:time+5, ann:[]};
 	addMotif(motif6, null);
+	motif7 = {mName:"footwork", timestamp:time+6, ann:[]};
+	addMotif(motif7, null);
 }
 
