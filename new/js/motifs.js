@@ -161,7 +161,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></ul>";
+	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' id='" + motifId + "-checkbox' name='cc' />" + "<label for='" + motifId + "-checkbox'><span class='checkbox-span'></span>" + "<a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></label></ul>";
 
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;

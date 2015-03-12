@@ -218,3 +218,21 @@ a.clicked{
 .remove-motif {
 	display: none;
 }
+
+input[type="checkbox"] {
+    display:none;
+}
+
+input[type="checkbox"] + label .checkbox-span {
+    display:inline-block;
+    width:16px;
+    height:16px;
+    margin:0px 6px 0 0;
+    vertical-align:middle;
+    background:url(unchecked.png) left top no-repeat;
+    cursor:pointer;
+}
+
+input[type="checkbox"]:checked + label .checkbox-span {
+    background:url(checked.png) left top no-repeat;
+}
