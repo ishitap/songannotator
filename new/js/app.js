@@ -174,14 +174,14 @@ function displayAllAnnotations(annotations) {
 function highlight(time){
 	onAnn.forEach(function (e, i, a) {
 		$('#' + e.displayID).removeClass("highlighted");
-		unhighlightTick(e);
+		unhighlightTick(e.tick);
 	});
 	onAnn = [];
 	for (i = 0; i < annotations.length; i++) {
 		if (annotations[i].timestamp == time) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
 			scrollToAnnotation(annotations[i]);
-			highlightTick(annotations[i]);
+			highlightTick(annotations[i].tick);
 			onAnn.push(annotations[i]);
 		}
 	}
