@@ -152,25 +152,22 @@ function removeAnnotation(annotation) {
 	var displayID = annotation.attr("id");
 	annotation.slideUp(400, function () {
 		$(this).remove();
-	});
-
-	var indexToRemove = findAnnotation(displayID);
-	var annotationToRemove = annotations[indexToRemove];
-	var annotationMotifs = annotationToRemove.motifs;
-	if (annotationMotifs) {
-		for (i = 0; i < motifs.length; i++) {
-			if (annotationMotifs.indexOf(motifs[i].timestamp) > -1) {
-				annLocation = motifs[i].ann.indexOf(displayID);
-				motifs[i].ann.splice(annLocation, 1);
+		var indexToRemove = findAnnotation(displayID);
+		var annotationToRemove = annotations[indexToRemove];
+		var annotationMotifs = annotationToRemove.motifs;
+		if (annotationMotifs) {
+			for (i = 0; i < motifs.length; i++) {
+				if (annotationMotifs.indexOf(motifs[i].timestamp) > -1) {
+					annLocation = motifs[i].ann.indexOf(displayID);
+					motifs[i].ann.splice(annLocation, 1);
+				}
 			}
 		}
-	}
-	annotations.splice(indexToRemove, 1);
-	removeTick(annotationToRemove.tick);
-
-	if (annotations.length == 0) {
-		$("empty-text").show();
-	}
+		annotations.splice(indexToRemove, 1);
+		removeTick(annotationToRemove.tick);
+		if (annotations.length == 0)
+			$("#empty-text").show();
+	});
 }
 
 // Displays all the annotations that are already present
