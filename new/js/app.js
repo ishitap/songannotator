@@ -205,6 +205,7 @@ function keepTime(){
 	prevFormVal = curFormVal;
 }
 
+
 $("#formText").keyup(function () {
 	var text = $(this).val();
 	if (text.trim() == "") {
@@ -214,6 +215,11 @@ $("#formText").keyup(function () {
 		$(".submit-button").removeAttr("disabled");
 	}
 });
+
+function clickAnn(displayID){
+	ann = annotations[findAnnotation(displayID)];
+	jumpTo(ann.timestamp);
+}
 
 $("#annForm").submit(function() {
 	event.preventDefault();
