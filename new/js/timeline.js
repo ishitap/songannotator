@@ -31,6 +31,7 @@ function drawTick(seconds) {
 
 function highlightTick(tick) {
 	tick.fillColor = "#6DCA2D";
+	tick.bringToFront();
 	view.draw();
 }
 
