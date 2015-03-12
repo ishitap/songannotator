@@ -140,6 +140,7 @@ wavesurfer.on('ready', function () {
   setupTicksCanvas(wavesurfer.getDuration());
   displayAllAnnotations(ann);
   addInitialMotifs();
+  addMotifFiltering();
 });
 
 

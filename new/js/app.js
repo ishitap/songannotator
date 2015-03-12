@@ -231,6 +231,6 @@ $("#annForm").submit(function() {
 	displayAnnotation(annotation);
 	getMotif(text, annotation);
 	this.reset();
-	(".submit-button").attr("disabled", "disabled");
+	// (".submit-button").attr("disabled", "disabled");
 });
 
