@@ -108,7 +108,7 @@
 
   <!-- annotation template -->
   <script id="annotation-template" type="text/x-handlebars-template">
-    <div class="panel panel-default annotation annotation-hidden" id="{{displayID}}">
+    <div class="panel panel-default annotation annotation-hidden" id="{{displayID}}" onclick="annotationClick({{displayID}})">
       <div class="panel-body">
         <div class="col-md-2 annotation-time">
           <span class="annotation-time-display">{{displayTime}}</span>

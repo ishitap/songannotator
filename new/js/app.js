@@ -208,7 +208,6 @@ function keepTime(){
 $("#annForm").submit(function() {
 	event.preventDefault();
 	var timestamp = recordTime;
-	// var timestamp = Math.floor(wavesurfer.getCurrentTime());
 	prevFormVal = "";
 	var text = $('input[name="text"]').val();
 	var annotation = {timestamp: timestamp, text: text};
