@@ -20,18 +20,23 @@
       <a class="navbar-brand">
         <span id="brand">STEP</span><span id="brand-bold">NOTE</span>
       </a>
+    </div>
+    <div class="navbar-inner">
       <ul class="nav navbar-nav">
         <li>
-          <a id="time">
-            Time: 0:00
-          </a>
+          <p class="navbar-text">Feel So Close</p>
+        </li>
+        <li>
+          <p class="navbar-text" id="time">
+            0:00
+          </p>
         </li>
       </ul>
     </div>
   </nav>
 
   <!-- waveform and controls -->
-  <div class="container-fluid">
+  <div class="container-fluid fixed">
     <div id="waveform">
       <div class="progress progress-striped active" id="progress-bar">
         <div class="progress-bar progress-bar-info"></div>
@@ -43,6 +48,7 @@
     </div>
 
     <!--<div class="row" id="timeline"></div>-->
+
     <div class="row" id="controls">
       <div class="col-md-2"></div>
       <div class="col-md-8">
@@ -56,8 +62,16 @@
           <button type="button" class="btn btn-default" data-action="forth">
             <span class="glyphicon glyphicon-step-forward"></span>
           </button>
-          <button type="button" class="btn btn-default" data-action="toggle-mute">
-            <span class="glyphicon glyphicon-volume-off"></span>
+          <button type="button" class="btn btn-default" data-action="mute">
+            <span class="glyphicon glyphicon-volume-up" id="volume"></span>
+          </button>
+        </div>
+        <div id="new-annotation-form" contenteditable>
+          New annotation
+        </div>
+        <div class="btn-group" role="group">
+          <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
       </div>
@@ -68,14 +82,35 @@
   <!-- annotations -->
   <div class="container-fluid" id="content">
     <div class="row">
-      <div class="col-md-3"></div>
+      <div class="col-md-2"></div>
       <div class="col-md-6">
         <div id="annotation-display">
+          <div id="annotation-form" class="container">
+            <div class="col-md-2"></div>
+            <form id="annForm">
+              <div class="col-md-6">
+                <input type="text" placeholder="Add an annotation..." name="text"></input>
+              </div>
+              <input type="submit" value="Add"></input>
+            </form>
+          </div>
+          <p id="filter-text">No annotations match</p>
           <div id="annotation-list">
           </div>
         </div>
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-md-2 motDiv">
+        <div id="motif-display">
+        <h3>Filter</h3>
+        <table id="motif-table">
+          <tr id="first-row">
+        </table>
+        <li id="motif-list">
+          <ul id="first-elem"></ul>
+        </li>
+      </div>
+      </div>
+      <div class="col-md-2"></div>
     </div>
   </div>
 
@@ -91,21 +126,21 @@
           {{text}}
         </div>
         <div class="col-md-1 annotation-control">
-        <span class="glyphicon glyphicon-remove remove-annotation" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-remove remove-annotation"></span>
         </div>
       </div>
     </div>
   </script>
 
   <!-- wavesurfer.js -->
-  <script type="text/javascript" src="wavesurfer.min.js"></script>
+  <script type="text/javascript" src="js/wavesurfer.min.js"></script>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
-  <script type="text/javascript" src="../js/paper-full.min.js"></script>
-  <script type="text/javascript" src="ip_script.js"></script>
-  <script type="text/javascript" src="waveform.js"></script>
-  <script type="text/javascript" src="controls.js"></script>
-  <script type="text/javascript" src="script.js"></script>
+  <script type="text/javascript" src="js/paper-full.min.js"></script>
+  <script type="text/javascript" src="js/waveform.js"></script>
+  <script type="text/javascript" src="js/motifs.js"></script>
+  <script type="text/javascript" src="js/timeline.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>

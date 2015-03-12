@@ -1,29 +1,33 @@
-/* Globals */
+/* formerly script.js and form.js */
 
-var id_counter = 1; // for annotation ids
-var annotationList; // refers to the annotation table
-var annotations = []; // data structure for annotations
-var onAnn = []; // stores the id of the annotation which is currently "on", if any
+// annotation -> { timestamp, text, displayID }
 
-/* Helper functions */
+var id_counter = 1;      // global for annotation ids
+var annotationList;               // global referring to the annotation table
+var annotations = [];    // global data structure for annotations
+// Global variable which stores the id of the annotation which is currently "on", if any
+onAnn = [];
+var canvas;
 
-// Converts number of seconds into timestamp
-function secondsToTime(seconds) {
-	var min = Math.floor(seconds / 60);
-	var sec = seconds % 60;
+var annotationTemplate;
+
+function formatTimestamp(timestamp) {
+	var min = Math.floor(timestamp / 60);
+	var sec = timestamp % 60;
 	if (sec < 10) {
 		sec = "0" + sec;
 	}
-	return min + ":" + sec;
+	var formatted = min + ":" + sec;
+	return formatted;
 }
 
-// Converts timestamp into number of seconds
-function timeToSeconds(time) {
-	var sections = time.split(":");
+// converts xx:xx to seconds
+function formatTimeReverse(timestamp) {
+	var sections = timestamp.split(":");
 	return (Number(sections[0]) * 60) + Number(sections[1]);
 }
 
-// Finds the index for annotation to be added at within the time-sorted array
+// Helper Function: Finds the right spot for the annotation to be added within the time-wise sorted array
 function findIndex(annotation) {
 	var index = annotations.length;
 	for (i = 0; i < annotations.length; i++){
@@ -35,12 +39,29 @@ function findIndex(annotation) {
 	return index;
 }	
 
-/* Functions */
+function getMotif(textVal, annotation){
+	i = 0;
+	annotation["motifs"] = []
+	while (i < textVal.length){
+		hashTag = textVal.indexOf('#',i);
+		if (hashTag == -1){
+			break;
+		}
+		space = textVal.indexOf(' ',hashTag);
+		if (space == -1){
+			space = textVal.length;
+		}		
+		tag = textVal.substring(hashTag+1,space);
+		newMotif = {mName: tag, timestamp:Date.now(), ann:[]};
+		addMotif(newMotif, annotation);
+		i = hashTag + 1;
+	}
+}
 
 // Displays the newly added annotation
 function displayAnnotation(annotation) {
 	annotation.timestamp = Number(annotation.timestamp);
-	annotation.displayTime = secondsToTime(annotation.timestamp);
+	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
 
 	var annotationHTML = annotationTemplate(annotation);
@@ -53,15 +74,14 @@ function displayAnnotation(annotation) {
 		var prev = annotationList.find('#' + annotations[prevIndex].displayID)
 		prev.after(annotationHTML);
 	}
-	else {
+	else 
 		annotationList.prepend(annotationHTML);
-	}
 
 	annotations.splice(index, 0, annotation);
 	addAnnotationInteractions($("#" + annotation.displayID));
+	annotation.tick = drawTick(annotation.timestamp);
 }
 
-// Adds listeners for annotation
 function addAnnotationInteractions(annotation) {
 	annotation.slideDown()
 		.mouseover(function () {
@@ -83,7 +103,7 @@ function addAnnotationInteractions(annotation) {
 	});
 
 	annotation.find(".annotation-time-input").on("blur keypress", function (e) {
-		if (e.which == 13) {
+		if (e.which == 13 ) {
 			e.preventDefault();
 		}
 		if (e.type == "blur" || e.which == 13) {
@@ -100,7 +120,6 @@ function addAnnotationInteractions(annotation) {
 	});
 }
 
-// Changes timestamp for annotation
 function changeAnnotationTime(annotation, newTimestamp) {
 	var displayID = annotation.attr("id");
 	var oldAnnotation = annotations[findAnnotation(displayID)];
@@ -111,7 +130,6 @@ function changeAnnotationTime(annotation, newTimestamp) {
 	displayAnnotation(newAnnotation);
 }
 
-// Finds annotation based on displayID
 function findAnnotation(displayID) {
 	var index = -1;
 	annotations.some(function (e, i, a) {
@@ -124,7 +142,6 @@ function findAnnotation(displayID) {
 	return index;
 }
 
-// Removes annotation
 function removeAnnotation(annotation) {
 	var displayID = annotation.attr("id");
 	annotation.slideUp(400, function () {
@@ -143,6 +160,7 @@ function removeAnnotation(annotation) {
 		}
 	}
 	annotations.splice(indexToRemove, 1);
+	removeTick(annotationToRemove);
 }
 
 // Displays all the annotations that are already present
@@ -156,56 +174,34 @@ function displayAllAnnotations(annotations) {
 function highlight(time){
 	onAnn.forEach(function (e, i, a) {
 		$('#' + e.displayID).removeClass("highlighted");
+		unhighlightTick(e);
 	});
 	onAnn = [];
 	for (i = 0; i < annotations.length; i++) {
 		if (annotations[i].timestamp == time) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
 			scrollToAnnotation(annotations[i]);
+			highlightTick(annotations[i]);
 			onAnn.push(annotations[i]);
 		}
 	}
 }
 
-// Scrolls to annotation
 function scrollToAnnotation(annotation) {
-	/* var annotationView = $('#' + annotation.displayID);
-	var scrollPos = annotationView.offset().top - 50;
-	$('html, body').animate({
-		scrollTop: scrollPos
-	}, 400); */
+	// var annotationView = $('#' + annotation.displayID);
+	// var scrollPos = annotationView.offset().top - 50;
+	// $('html, body').animate({
+	// 	scrollTop: scrollPos
+	// }, 400);
 }
 
-// Function that runs with pre-populated annotations when the page is first loaded 
-$(document).ready(function () {
-	annotationList = $('#annotation-list');
-	annotationTemplate = Handlebars.compile($("#annotation-template").html());
-
-	ann = [ { timestamp: 1, text: "First annotation"},
-					{ timestamp: 4, text: "Second annotation"},
-					{ timestamp: 12, text: "Opportunity for ramp-up"},
-					{ timestamp: 30, text: "Bass drop"}]
-
-	displayAllAnnotations(ann);
-});
-
-wavesurfer.on('ready', function () {
-  // Check current time to highlight annotations
-	window.setInterval(function() {
-		var seconds = Math.floor(wavesurfer.currentTime);
-		highlight(seconds);
-		document.getElementById("time").innerHTML = "Time: " + secondsToTime(seconds);
-	}, 100);
-});
-
-/* Callbacks */
-
-// Creates and displays new annotation on form submit
 $("#annForm").submit(function() {
 	event.preventDefault();
-	var time = Math.floor(wavesurfer.getCurrentTime());
+	var timestamp = Math.floor(wavesurfer.getCurrentTime());
 	var text = $('input[name="text"]').val();
-	var annotation = {timestamp: time, text: text};
+	var annotation = {timestamp: timestamp, text: text};
 	displayAnnotation(annotation);
+	getMotif(text, annotation);
 	this.reset()
 });
+
