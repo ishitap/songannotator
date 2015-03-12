@@ -180,7 +180,7 @@ function highlight(time){
 	});
 	onAnn = [];
 	for (i = 0; i < annotations.length; i++) {
-		if (annotations[i].timestamp > (time - 2) && annotations[i].timestamp < (time + 2)) {
+		if (annotations[i].timestamp > (time - 0.5) && annotations[i].timestamp < (time + 1.5)) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
 			scrollToAnnotation(annotations[i]);
 			highlightTick(annotations[i].tick);
