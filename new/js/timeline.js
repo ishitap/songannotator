@@ -33,3 +33,7 @@ function unhighlightTick(tick) {
 	tick.fillColor = "#D6E6A8";
 	view.draw();
 }
+
+function removeTick(tick) {
+	tick.remove();
+}

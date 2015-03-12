@@ -160,7 +160,7 @@ function removeAnnotation(annotation) {
 		}
 	}
 	annotations.splice(indexToRemove, 1);
-	removeTick(annotationToRemove);
+	removeTick(annotationToRemove.tick);
 }
 
 // Displays all the annotations that are already present
