@@ -163,10 +163,6 @@ function addMotif(motif, annotation) {
 
 	var newElem = "<ul id='" + motifId + "'><a href='#' id='link"+ motifId +"'class='unclicked' onclick='filter("+ motifId + ")'>"+ motif.mName + "  " + "</a><span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></ul>";
 
-	$('#' + motifId).mouseover(function(){
-		console.log("hello");
-	})
-
 	var mIndex = findMIndex(motif);
 	var prevMIndex = mIndex - 1;
 
@@ -178,6 +174,15 @@ function addMotif(motif, annotation) {
 	else{ 
 		$('#motif-list').find('#first-elem').after(newElem);
 	}
+
+	$('#' + motifId).mouseover(function(){
+		console.log("hello");
+		$(this).find(".remove-motif").show();
+	});
+
+	$('#' + motifId).mouseout(function(){
+		$(this).find(".remove-motif").hide();
+	})
 
 	if (mIndex >= motifs.length)
 		motifs.push(motif);
