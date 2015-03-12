@@ -61,7 +61,9 @@ function getMotif(textVal, annotation){
 }
 
 // Displays the newly added annotation
-function displayAnnotation(annotation) {
+function displayAnnotation(annotation) {	
+	$("#empty-text").hide();
+
 	annotation.timestamp = Number(annotation.timestamp);
 	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
@@ -93,7 +95,9 @@ function addAnnotationInteractions(annotation) {
 			$(this).find(".annotation-control").hide();
 		});
 
-	annotation.find(".remove-annotation").click(function () {
+	annotation.find(".remove-annotation").click(function (e) {
+		e.preventDefault();
+		e.stopPropagation();
 		var annotationToRemove = $(this).closest(".annotation");
 		removeAnnotation(annotationToRemove);
 	});
@@ -148,21 +152,22 @@ function removeAnnotation(annotation) {
 	var displayID = annotation.attr("id");
 	annotation.slideUp(400, function () {
 		$(this).remove();
-	});
-
-	var indexToRemove = findAnnotation(displayID);
-	var annotationToRemove = annotations[indexToRemove];
-	var annotationMotifs = annotationToRemove.motifs;
-	if (annotationMotifs) {
-		for (i = 0; i < motifs.length; i++) {
-			if (annotationMotifs.indexOf(motifs[i].timestamp) > -1) {
-				annLocation = motifs[i].ann.indexOf(displayID);
-				motifs[i].ann.splice(annLocation, 1);
+		var indexToRemove = findAnnotation(displayID);
+		var annotationToRemove = annotations[indexToRemove];
+		var annotationMotifs = annotationToRemove.motifs;
+		if (annotationMotifs) {
+			for (i = 0; i < motifs.length; i++) {
+				if (annotationMotifs.indexOf(motifs[i].timestamp) > -1) {
+					annLocation = motifs[i].ann.indexOf(displayID);
+					motifs[i].ann.splice(annLocation, 1);
+				}
 			}
 		}
-	}
-	annotations.splice(indexToRemove, 1);
-	removeTick(annotationToRemove.tick);
+		annotations.splice(indexToRemove, 1);
+		removeTick(annotationToRemove.tick);
+		if (annotations.length == 0)
+			$("#empty-text").show();
+	});
 }
 
 // Displays all the annotations that are already present
@@ -180,7 +185,7 @@ function highlight(time){
 	});
 	onAnn = [];
 	for (i = 0; i < annotations.length; i++) {
-		if (annotations[i].timestamp > (time - 2) && annotations[i].timestamp < (time + 2)) {
+		if (annotations[i].timestamp > (time - 0.5) && annotations[i].timestamp < (time + 1.5)) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
 			scrollToAnnotation(annotations[i]);
 			highlightTick(annotations[i].tick);
