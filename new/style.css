@@ -59,6 +59,15 @@ body {
 
 .annotation-control {
 	display: none;	
+	text-align: right;
+}
+
+.annotation-control span ~ span {
+	padding-left: 15px;
+}
+
+.annotation-control span:hover {
+	color: #4BB5C1;
 }
 
 .annotation-hidden {
@@ -235,4 +244,8 @@ input[type="checkbox"] + label .checkbox-span {
 
 input[type="checkbox"]:checked + label .checkbox-span {
     background:url(checked.png) left top no-repeat;
+}
+
+#controls button.submit-button:disabled {
+	background-color: #d3d3d3;
 }

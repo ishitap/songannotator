@@ -68,10 +68,10 @@
         </div>
         <form id="annForm"></form>
         <div id="new-annotation-form">
-            <input form="annForm" id="formText" onkeypress="keepTime()" type="text" placeholder="Add an annotation..." name="text"></input>
+            <input form="annForm" id="formText" onkeypress="keepTime()" type="text" placeholder="Enter an annotation..." name="text"></input>
         </div>     
         <div class="btn-group" role="group">
-          <button form="annForm" type="submit" class="btn btn-default submit-button">
+          <button form="annForm" type="submit" class="btn btn-default submit-button" disabled>
             <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
@@ -117,11 +117,12 @@
           <span class="annotation-time-display">{{displayTime}}</span>
           <input type="text" class="annotation-time-input" value="{{displayTime}}"></input>
         </div>
-        <div class="col-md-9" id="ann{{displayID}}">
+        <div class="col-md-8" id="ann{{displayID}}">
           {{text}}
         </div>
-        <div class="col-md-1 annotation-control">
-        <span class="glyphicon glyphicon-remove remove-annotation"></span>
+        <div class="col-md-2 annotation-control">
+          <span class="glyphicon glyphicon-pencil edit-annotation"></span>
+          <span class="glyphicon glyphicon-remove remove-annotation"></span>
         </div>
       </div>
     </div>
