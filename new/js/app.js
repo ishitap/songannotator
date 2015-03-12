@@ -8,6 +8,8 @@ var annotations = [];    // global data structure for annotations
 // Global variable which stores the id of the annotation which is currently "on", if any
 onAnn = [];
 var canvas;
+var recordTime = 0;
+var prevFormVal = $("formText").val();
 
 var annotationTemplate;
 
@@ -195,9 +197,19 @@ function scrollToAnnotation(annotation) {
 	// }, 400);
 }
 
+function keepTime(){
+	curFormVal = $("#formText").val();
+	if (prevFormVal == ""){
+		recordTime = Math.floor(wavesurfer.getCurrentTime());
+	}
+	prevFormVal = curFormVal;
+}
+
 $("#annForm").submit(function() {
 	event.preventDefault();
-	var timestamp = Math.floor(wavesurfer.getCurrentTime());
+	var timestamp = recordTime;
+	// var timestamp = Math.floor(wavesurfer.getCurrentTime());
+	prevFormVal = "";
 	var text = $('input[name="text"]').val();
 	var annotation = {timestamp: timestamp, text: text};
 	displayAnnotation(annotation);
