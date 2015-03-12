@@ -55,4 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#controls .btn-group button").mouseup(function(){
       $(this).blur();
     });
+
+    setupTicksCanvas();
 });
