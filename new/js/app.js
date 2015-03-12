@@ -61,7 +61,9 @@ function getMotif(textVal, annotation){
 }
 
 // Displays the newly added annotation
-function displayAnnotation(annotation) {
+function displayAnnotation(annotation) {	
+	$("#empty-text").hide();
+
 	annotation.timestamp = Number(annotation.timestamp);
 	annotation.displayTime = formatTimestamp(annotation.timestamp);
 	annotation.displayID = id_counter++;
@@ -93,7 +95,9 @@ function addAnnotationInteractions(annotation) {
 			$(this).find(".annotation-control").hide();
 		});
 
-	annotation.find(".remove-annotation").click(function () {
+	annotation.find(".remove-annotation").click(function (e) {
+		e.preventDefault();
+		e.stopPropagation();
 		var annotationToRemove = $(this).closest(".annotation");
 		removeAnnotation(annotationToRemove);
 	});
@@ -163,6 +167,10 @@ function removeAnnotation(annotation) {
 	}
 	annotations.splice(indexToRemove, 1);
 	removeTick(annotationToRemove.tick);
+
+	if (annotations.length == 0) {
+		$("empty-text").show();
+	}
 }
 
 // Displays all the annotations that are already present

@@ -141,6 +141,9 @@ wavesurfer.on('ready', function () {
   displayAllAnnotations(ann);
   addInitialMotifs();
   addMotifFiltering();
+
+  if (annotations.length == 0)
+    $("#empty-text").show();
 });
 
 

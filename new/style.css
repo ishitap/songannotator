@@ -188,7 +188,7 @@ a.clicked{
 	padding-top: 20px;
 }
 
-#filter-text {
+#filter-text, #empty-text {
 	display: none;
 }
 
