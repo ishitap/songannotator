@@ -59,6 +59,15 @@ body {
 
 .annotation-control {
 	display: none;	
+	text-align: right;
+}
+
+.annotation-control span ~ span {
+	padding-left: 15px;
+}
+
+.annotation-control span:hover {
+	color: #4BB5C1;
 }
 
 .annotation-hidden {
