@@ -141,3 +141,8 @@ wavesurfer.on('ready', function () {
   displayAllAnnotations(ann);
   addInitialMotifs();
 });
+
+
+function jumpTo(numSecond){
+  wavesurfer.play(numSecond);
+}
