@@ -81,7 +81,10 @@ body {
 .annotation-time-input {
 	max-width: 40px;
 	outline: none;
-	display: none;
+}
+
+.annotation-text-input {
+	outline: none;
 }
 
 .highlighted {
@@ -252,4 +255,8 @@ input[type="checkbox"]:checked + label .checkbox-span {
 
 #controls button.submit-button:disabled {
 	background-color: #d3d3d3;
+}
+
+.editAnnotationForm {
+	display: none;
 }

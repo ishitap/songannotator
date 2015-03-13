@@ -114,17 +114,31 @@
   <script id="annotation-template" type="text/x-handlebars-template">
     <div class="panel panel-default annotation annotation-hidden" onclick="clickAnn({{displayID}})" id="{{displayID}}">
       <div class="panel-body">
-        <div class="col-md-2 annotation-time">
-          <span class="annotation-time-display">{{displayTime}}</span>
-          <input type="text" class="annotation-time-input" value="{{displayTime}}"></input>
+        <div class="annotationDisplay">
+          <div class="col-md-2 annotation-time">
+            <span class="annotation-time-display">{{displayTime}}</span>
+          </div>
+          <div class="col-md-8 annotation-text-display" id="ann{{displayID}}">
+            {{text}}
+          </div>
+          <div class="col-md-2 annotation-control">
+            <span class="glyphicon glyphicon-pencil edit-annotation"></span>
+            <span class="glyphicon glyphicon-remove remove-annotation"></span>
+          </div>
         </div>
-        <div class="col-md-8" id="ann{{displayID}}">
-          {{text}}
-        </div>
-        <div class="col-md-2 annotation-control">
-          <span class="glyphicon glyphicon-pencil edit-annotation"></span>
-          <span class="glyphicon glyphicon-remove remove-annotation"></span>
-        </div>
+
+        <form class="editAnnotationForm">
+          <div class="col-md-2 annotation-time">
+            <input type="text" class="annotation-time-input" value="{{displayTime}}"></input>
+          </div>
+          <div class="col-md-8" id="ann{{displayID}}">
+            <input type="text"class="annotation-text-input" value="{{text}}"></input>
+          </div>
+          <div class="col-md-2 annotation-control">
+          <input type="submit" value="go" class="btn btn-default"></input>
+          </div>
+        </form>
+
       </div>
     </div>
   </script>
