@@ -130,7 +130,7 @@ function addAnnotationInteractions(annotation) {
 		editAnnotation(annotationToEdit);
 	});
 
-	annotation.find("form").submit(function () {
+	annotation.find("form").on("submit focusout", function () {
 		event.preventDefault();
 		var newTime = $(this).find(".annotation-time-input").val().trim();
 		var newText = $(this).find(".annotation-text-input").val().trim();
@@ -157,7 +157,8 @@ function addAnnotationInteractions(annotation) {
 
 function editAnnotation(annotation) {
 	annotation.find(".annotationDisplay").hide();
-	annotation.find(".editAnnotationForm").show();
+	annotation.find(".editAnnotationForm").show()
+		.find(".annotation-text-input").focus();
 }
 
 function changeAnnotationTime(annotation, newTimestamp) {

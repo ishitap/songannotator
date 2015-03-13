@@ -2,6 +2,7 @@
 
 // Create an instance
 var wavesurfer = Object.create(WaveSurfer);
+var cancelKeyDownHandler = false;
 
 //stores the past second instance
 var prevSecond = 0;
@@ -90,34 +91,43 @@ var GLOBAL_ACTIONS = {
 
 // Bind actions to buttons and keypresses
 document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('keydown', function (e) {
-        var map = {
-            32: 'play',       // space
-            37: 'back',       // left
-            39: 'forth'       // right
-        };
-        var action = map[e.keyCode];
-        if (action in GLOBAL_ACTIONS) {
-            if (document == e.target || document.body == e.target) {
-                e.preventDefault();
-            }
-            GLOBAL_ACTIONS[action](e);
+  document.addEventListener('keydown', function (e) {
+    if (cancelKeyDownHandler) return;
+    var map = {
+        32: 'play',       // space
+        37: 'back',       // left
+        39: 'forth'       // right
+    };
+    var action = map[e.keyCode];
+    if (action in GLOBAL_ACTIONS) {
+        if (document == e.target || document.body == e.target) {
+            e.preventDefault();
         }
-    });
+        GLOBAL_ACTIONS[action](e);
+    }
+  });
+  window.keyDownHandler = document.body.keydown;
 
-    [].forEach.call(document.querySelectorAll('[data-action]'), function (el) {
-        el.addEventListener('click', function (e) {
-            var action = e.currentTarget.dataset.action;
-            if (action in GLOBAL_ACTIONS) {
-                e.preventDefault();
-                GLOBAL_ACTIONS[action](e);
-            }
-        });
+  [].forEach.call(document.querySelectorAll('[data-action]'), function (el) {
+    el.addEventListener('click', function (e) {
+      var action = e.currentTarget.dataset.action;
+      if (action in GLOBAL_ACTIONS) {
+        e.preventDefault();
+        GLOBAL_ACTIONS[action](e);
+      }
     });
+  });
 
-    $("#controls .btn-group button").mouseup(function () {
-      $(this).blur();
-    });
+  $("#controls .btn-group button").mouseup(function () {
+    $(this).blur();
+  });
+});
+
+// Turn off key press controls when input
+$("#formText").focus(function() {
+  cancelKeyDownHandler = true;
+}).blur(function() {
+  cancelKeyDownHandler = false;
 });
 
 /* Callback */
