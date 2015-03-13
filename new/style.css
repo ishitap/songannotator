@@ -192,7 +192,7 @@ a.clicked{
 	position: relative;
 }
 
-#filter-text, #empty-text {
+#filter-text {
 	display: none;
 }
 

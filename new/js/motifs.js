@@ -109,6 +109,10 @@ function deleteFunction(motifId, modifyAnnotation){
 		}
 	}
 	$("#" + motifId).remove();
+
+	if(motifs.length == 0) {
+		$("#motif-display .empty-text").show();
+	}
 }
 
 //Adds Motif to the Table Display
@@ -178,6 +182,8 @@ function addMotif(motif, annotation) {
 			clearFilter();
 		}
 	});
+
+	$("#motif-display .empty-text").hide();
 }
 
 function addInitialMotifs(){

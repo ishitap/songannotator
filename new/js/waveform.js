@@ -148,8 +148,8 @@ wavesurfer.on('ready', function () {
   addInitialMotifs();
   addMotifFiltering();
 
-  if (annotations.length == 0)
-    $("#empty-text").show();
+  // if (annotations.length == 0)
+  //   $("#annotation-display .empty-text").show();
 });
 
 
