@@ -258,5 +258,5 @@ input[type="checkbox"]:checked + label .checkbox-span {
 .fixedPlace{
 	position: fixed;
 	top: 320px;
-	left: 1000px;
+	left: 950px;
 }
