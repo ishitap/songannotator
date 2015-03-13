@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Init
   wavesurfer.init(options);
   // Load audio from URL
-  wavesurfer.load('peeloon.mp3');
+  wavesurfer.load('rhydhun.mp3');
 });
 
 // Report errors
