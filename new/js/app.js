@@ -60,6 +60,27 @@ function getMotif(textVal, annotation){
 	}
 }
 
+function removeMotifs(annotation) {
+	var annotationMotifs = annotation.motifs;
+	if (!annotationMotifs) return;
+
+	for (var i = 0; i < motifs.length; i++) {
+		console.log("woot")
+		console.log(motifs[i].mName)
+		var j = annotationMotifs.indexOf(motifs[i].timestamp);
+		console.log(j)
+		if (j > -1) {
+			annLocation = motifs[i].ann.indexOf(annotation.displayID);
+			motifs[i].ann.splice(annLocation, 1);
+			if (motifs[i].ann.length == 0) {
+				deleteFunction(motifs[i].timestamp, false);
+				i--;
+			}
+		}
+	}
+	annotation.motifs = [];
+}
+
 // Displays the newly added annotation
 function displayAnnotation(annotation) {	
 	$("#empty-text").hide();
@@ -109,32 +130,8 @@ function addAnnotationInteractions(annotation) {
 		editAnnotation(annotationToEdit);
 	});
 
-	// annotation.find(".annotation-time-display").click(function () {
-	// 	$(this).hide();
-	// 	var annotationTimeInput = $(this).next();
-	// 	annotationTimeInput.show().focus();
-	// });
-
-	// annotation.find(".annotation-time-input").on("blur keypress", function (e) {
-	// 	if (e.which == 13 ) {
-	// 		e.preventDefault();
-	// 	}
-	// 	if (e.type == "blur" || e.which == 13) {
-	// 		$(this).hide();
-	// 		if ($(this).val() == $(this).prev().html()) {
-	// 			$(this).prev().show();
-	// 			return;
-	// 		}
-	// 		$(this).prev().html($(this).val());
-	// 		$(this).prev().show();
-	// 		var annotation = $(this).closest(".annotation");
-	// 		changeAnnotationTime(annotation, formatTimeReverse($(this).val()));
-	// 	}
-	// });
-
 	annotation.find("form").submit(function () {
 		event.preventDefault();
-		console.log("woot")
 		var newTime = $(this).find(".annotation-time-input").val().trim();
 		var newText = $(this).find(".annotation-text-input").val().trim();
 
@@ -143,7 +140,8 @@ function addAnnotationInteractions(annotation) {
 		annotation.find(".annotation-text-display").html(newText);
 		var annotationJSON = annotations[findAnnotation(annotation.attr("id"))];
 		annotationJSON.text = newText;
-		/* TODO: update motifs */
+		removeMotifs(annotationJSON);
+		getMotif(newText, annotationJSON);
 
 		// update annotation time
 		var annotationTimeDisplay = annotation.find(".annotation-time-display");
@@ -161,30 +159,6 @@ function editAnnotation(annotation) {
 	annotation.find(".annotationDisplay").hide();
 	annotation.find(".editAnnotationForm").show();
 }
-
-$(".editAnnotationForm").submit(function() {
-	event.preventDefault();
-	console.log("woot")
-	var newTime = $(this).find(".editTime").val().trim();
-	var newText = $(this).find(".editText").val().trim();
-
-	// update annotation text
-	var annotation = $(this).closest(".annotation");
-	annotation.find(".annotation-text-display").html(newText);
-	var annotationJSON = annotations[findAnnotation(annotation.attr("id"))];
-	annotationJSON.text = newText;
-	/* TODO: update motifs */
-
-	// update annotation time
-	var annotationTimeDisplay = annotation.find(".annotation-time-display");
-	if (newTime != annotationTimeDisplay.html()) {
-		annotationTimeDisplay.html(newTime);
-		changeAnnotationTime(annotation, formatTimeReverse(newTime));
-	}
-
-	annotation.find(".editAnnotationForm").hide();
-	annotation.find(".annotationDisplay").show();
-});
 
 function changeAnnotationTime(annotation, newTimestamp) {
 	var displayID = annotation.attr("id");
@@ -214,15 +188,7 @@ function removeAnnotation(annotation) {
 		$(this).remove();
 		var indexToRemove = findAnnotation(displayID);
 		var annotationToRemove = annotations[indexToRemove];
-		var annotationMotifs = annotationToRemove.motifs;
-		if (annotationMotifs) {
-			for (i = 0; i < motifs.length; i++) {
-				if (annotationMotifs.indexOf(motifs[i].timestamp) > -1) {
-					annLocation = motifs[i].ann.indexOf(displayID);
-					motifs[i].ann.splice(annLocation, 1);
-				}
-			}
-		}
+		removeMotifs(annotationToRemove);
 		annotations.splice(indexToRemove, 1);
 		removeTick(annotationToRemove.tick);
 		if (annotations.length == 0)

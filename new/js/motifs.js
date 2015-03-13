@@ -82,7 +82,7 @@ function addClickFunction(motifId){
 
 
 //Function to delete a motif
-function deleteFunction(motifId){
+function deleteFunction(motifId, modifyAnnotation){
 	var mot = 0;
 	var motText = "";
 	for (i = 0; i < motifs.length; i++){
@@ -96,7 +96,7 @@ function deleteFunction(motifId){
 	for (i = 0; i < annotations.length; i++){
 		if (annotations[i]["motifs"]){
 			var aMot = annotations[i]["motifs"].indexOf(motifId);
-			if (aMot > -1){
+			if (aMot > -1 && modifyAnnotation){
 				annotations[i]["motifs"].splice(aMot,1);
 				var val = annotations[i]["text"];
 				var mVal = val.indexOf("#" + motText);
@@ -140,7 +140,7 @@ function addMotif(motif, annotation) {
 
 	motifId = motif.timestamp;	
 
-	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' class='motifBox' id='" + motifId + "-checkbox' name='cc' />" + "<label class='motifLabel' for='" + motifId + "-checkbox'><span class='checkbox-span'></span>#" + motif.mName + "  " + "<span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+")' aria-hidden='true'></span></label></ul>";
+	var newElem = "<ul id='" + motifId + "'>" + "<input type='checkbox' class='motifBox' id='" + motifId + "-checkbox' name='cc' />" + "<label class='motifLabel' for='" + motifId + "-checkbox'><span class='checkbox-span'></span>#" + motif.mName + "  " + "<span class='glyphicon glyphicon-remove remove-motif' onclick='deleteFunction("+motifId+", true)' aria-hidden='true'></span></label></ul>";
 
 
 	var mIndex = findMIndex(motif);
