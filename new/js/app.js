@@ -84,6 +84,7 @@ function displayAnnotation(annotation) {
 	annotations.splice(index, 0, annotation);
 	addAnnotationInteractions($("#" + annotation.displayID));
 	annotation.tick = drawTick(annotation.timestamp);
+	highlight(Math.floor(wavesurfer.getCurrentTime()));
 }
 
 function addAnnotationInteractions(annotation) {
@@ -177,7 +178,7 @@ function displayAllAnnotations(annotations) {
 	});
 }
 
-// Given a time in seconds, highlights that annotation to be yellow 
+// Given a time in seconds, highlights that annotation  
 function highlight(time){
 	onAnn.forEach(function (e, i, a) {
 		$('#' + e.displayID).removeClass("highlighted");
@@ -187,19 +188,23 @@ function highlight(time){
 	for (i = 0; i < annotations.length; i++) {
 		if (annotations[i].timestamp > (time - 0.5) && annotations[i].timestamp < (time + 1.5)) {
 			$('#' + annotations[i].displayID).addClass("highlighted");
-			scrollToAnnotation(annotations[i]);
 			highlightTick(annotations[i].tick);
 			onAnn.push(annotations[i]);
 		}
 	}
+	if (onAnn.length > 0){
+		scrollToAnnotation(onAnn[0]);
+	}
 }
 
 function scrollToAnnotation(annotation) {
-	// var annotationView = $('#' + annotation.displayID);
-	// var scrollPos = annotationView.offset().top - 50;
-	// $('html, body').animate({
-	// 	scrollTop: scrollPos
-	// }, 400);
+	var annotationView = $('#' + annotation.displayID);
+	if (annotationView.offset().top + 50 > $(window).height()){
+		var scrollPos = annotationView.offset().top;
+		$('html, body').animate({
+			scrollTop: scrollPos - 250
+		}, 600);	
+	}
 }
 
 function keepTime(){

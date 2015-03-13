@@ -3,6 +3,9 @@
 // Create an instance
 var wavesurfer = Object.create(WaveSurfer);
 
+//stores the past second instance
+var prevSecond = 0;
+
 // Init & load audio file
 document.addEventListener('DOMContentLoaded', function () {
   // Set options
@@ -19,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Init
   wavesurfer.init(options);
   // Load audio from URL
-  wavesurfer.load('suraj.mp3');
+  wavesurfer.load('peeloon.mp3');
 });
 
 // Report errors
@@ -122,7 +125,10 @@ wavesurfer.on('ready', function () {
   // Check current time to highlight annotations
   window.setInterval(function() {
     var seconds = Math.floor(wavesurfer.getCurrentTime());
-    highlight(seconds);
+    if (seconds != prevSecond){
+      highlight(seconds);
+    }
+    prevSecond = seconds; 
     document.getElementById("time").innerHTML = formatTimestamp(seconds);
   }, 100);
 
