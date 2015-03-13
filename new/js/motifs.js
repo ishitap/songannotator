@@ -101,7 +101,7 @@ function deleteFunction(motifId, modifyAnnotation){
 				var val = annotations[i]["text"];
 				var mVal = val.indexOf("#" + motText);
 				var firstPart = val.substring(0,mVal);
-				var secondPart = val.substring(mVal+motText.length+2,val.length);
+				var secondPart = val.substring(mVal+1,val.length);
 				annotations[i]["text"] = firstPart.concat(secondPart);
 				valId = "#ann" + annotations[i]["displayID"];
 				$(valId)[0].innerHTML = annotations[i]["text"];
