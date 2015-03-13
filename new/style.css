@@ -189,6 +189,7 @@ a.clicked{
 #content {
 	margin-top: 248px;
 	padding-top: 20px;
+	position: relative;
 }
 
 #filter-text, #empty-text {
@@ -259,4 +260,10 @@ input[type="checkbox"]:checked + label .checkbox-span {
 
 .editAnnotationForm {
 	display: none;
+}
+
+.fixedPlace{
+	position: fixed;
+	top: 320px;
+	left: 950px;
 }
