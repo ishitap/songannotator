@@ -255,6 +255,8 @@ input[type="checkbox"]:checked + label .checkbox-span {
 	background-color: #d3d3d3;
 }
 
-.fixed{
-/*	position: fixed;
-*/}
+.fixedPlace{
+	position: fixed;
+	top: 320px;
+	left: 1000px;
+}
