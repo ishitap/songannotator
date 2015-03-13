@@ -186,6 +186,7 @@ a.clicked{
 #content {
 	margin-top: 248px;
 	padding-top: 20px;
+	position: relative;
 }
 
 #filter-text, #empty-text {
@@ -253,3 +254,7 @@ input[type="checkbox"]:checked + label .checkbox-span {
 #controls button.submit-button:disabled {
 	background-color: #d3d3d3;
 }
+
+.fixed{
+/*	position: fixed;
+*/}

@@ -85,6 +85,7 @@ function displayAnnotation(annotation) {
 	addAnnotationInteractions($("#" + annotation.displayID));
 	annotation.tick = drawTick(annotation.timestamp);
 	highlight(Math.floor(wavesurfer.getCurrentTime()));
+	scrollToAnnotation(annotation);
 }
 
 function addAnnotationInteractions(annotation) {
@@ -199,12 +200,12 @@ function highlight(time){
 
 function scrollToAnnotation(annotation) {
 	var annotationView = $('#' + annotation.displayID);
-	if (annotationView.offset().top + 50 > $(window).height()){
+	// if (annotationView.offset().top + 50 > $(window).height()){
 		var scrollPos = annotationView.offset().top;
 		$('html, body').animate({
-			scrollTop: scrollPos - 250
+			scrollTop: scrollPos - 300
 		}, 600);	
-	}
+	// }
 }
 
 function keepTime(){
